@@ -1,4 +1,4 @@
-name: Documentation - Continuous Integration
+name: Documentación - Integración Continua
 
 on: [push]
 
@@ -13,11 +13,14 @@ jobs:
 
     steps:
 
-    - name: Set up Repository
+    - name: Inicializar el repositorio
       uses: actions/checkout@v3
 
-    - name: Install LaTeX
+    - name: Actualizar repositorios de Ubuntu
+      run: sudo apt update
+
+    - name: Instalar LaTeX
       run: sudo make install
 
-    - name: Build TeX project
+    - name: Compilar documentación
       run: make build
