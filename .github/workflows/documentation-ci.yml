@@ -7,13 +7,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./doc
+
     steps:
 
     - name: Set up Repository
       uses: actions/checkout@v3
-
-    - name: Change to documentation directory
-      run: cd doc
 
     - name: Install LaTeX
       run: sudo make install
