@@ -1,0 +1,31 @@
+name: Documentación - Integración Continua
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "./doc"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./doc
+
+    steps:
+
+    - name: Inicializar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Actualizar repositorios de Ubuntu
+      run: sudo apt update
+
+    - name: Instalar LaTeX
+      run: sudo make install
+
+    - name: Compilar documentación
+      run: make build

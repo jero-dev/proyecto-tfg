@@ -1,12 +1,5 @@
-DOC := proyecto.tex
+install:
+	apt install texlive-full
 
-all: doc
-
-doc: $(DOC:.tex=.pdf)
-
-all: proyecto.pdf
-
-%.pdf: %.tex FORCE
-	pdflatex $< && bibtex $* && pdflatex $< && pdflatex $<
-
-FORCE: 
+build:
+	pdflatex proyecto.tex && bibtex proyecto && pdflatex proyecto.tex && pdflatex proyecto.tex
