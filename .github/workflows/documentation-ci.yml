@@ -1,0 +1,19 @@
+name: Documentation - Continuous Integration
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Set up Repository
+      uses: actions/checkout@v3
+
+    - name: Install LaTeX
+      run: sudo make install
+
+    - name: Build TeX project
+      run: make build
