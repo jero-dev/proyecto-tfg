@@ -1,6 +1,11 @@
 name: Documentación - Integración Continua
 
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "./doc"
 
 jobs:
   build:
