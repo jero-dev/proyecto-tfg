@@ -20,12 +20,28 @@ jobs:
 
     - name: Inicializar el repositorio
       uses: actions/checkout@v3
+    
+    - name: Escanear documento LaTeX con TeXtidote
+      uses: ChiefGokhlayeh/textidote-action@v5
+      id: lint
+      with:
+          root_file: proyecto.tex
+          working_directory: doc
+          args: --check es
 
-    - name: Actualizar repositorios de Ubuntu
-      run: sudo apt update
-
-    - name: Instalar LaTeX
-      run: sudo make install
+    - name: Publicar el informe de TeXtidote
+      uses: actions/upload-artifact@v2
+      with:
+        name: textidote_report
+        path: doc/report.html
 
     - name: Compilar documentación
-      run: make build
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: proyecto.tex
+    
+    - name: Publicar el documento PDF creado mediante LaTeX
+      uses: actions/upload-artifact@v2
+      with:
+        name: memoria-tfg
+        path: doc/proyecto.pdf
