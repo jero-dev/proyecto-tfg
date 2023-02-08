@@ -4,27 +4,20 @@
 
 ## Tutor: Juan Julián Merelo Guervós
 
-___
 La documentación de este proyecto está realizada con LaTeX, por lo tanto para generar el archivo PDF necesitaremos instalar TeXLive (texlive-full) en nuestra distribución.
 
-`
-$ pdflatex proyecto.tex
-`
+Para ello, se puede utilizar el Makefile que se encuentra en el directorio `doc` para instalar y compilar la documentación.
 
-Seguido por
+### Instalación
 
-`
-bibtex proyecto
-`
+``` bash
+make install
+```
 
-y de nuevo dos veces
+**Nota**: Puede que necesites usar `sudo` antes de seguir con el comando para la instalación.
 
-`
-pdflatex proyecto.tex
-`
+## Compilación
 
-O directamente
-
-`
-make
-`
+```bash
+make build
+```
