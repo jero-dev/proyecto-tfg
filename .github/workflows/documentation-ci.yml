@@ -38,7 +38,8 @@ jobs:
     - name: Compilar documentación
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: doc/proyecto.tex
+        root_file: proyecto.tex
+        working_directory: doc
     
     - name: Publicar el documento PDF creado mediante LaTeX
       uses: actions/upload-artifact@v2
