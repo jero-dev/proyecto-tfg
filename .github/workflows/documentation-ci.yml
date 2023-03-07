@@ -7,13 +7,14 @@ on:
     paths:
       - "doc/**"
   pull_request:
-    branches:
-      - "main"
     paths:
       - "doc/**"
 
 jobs:
+  
   build:
+    
+    name: Compilación y comprobación de la documentación
 
     runs-on: ubuntu-latest
 
@@ -47,6 +48,7 @@ jobs:
         working_directory: doc
     
     - name: Publicar el documento PDF creado mediante LaTeX
+      if: ${{ github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v2
       with:
         name: memoria-tfg
