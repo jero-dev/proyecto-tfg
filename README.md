@@ -1,4 +1,4 @@
-# Trabajo de Fin de Grado: (Título aún por determinar)
+# Trabajo de Fin de Grado: Gestión de ofertas publicadas en canales de Discord y Telegram
 
 ## Autor: Jerónimo Chaves Caballero
 
