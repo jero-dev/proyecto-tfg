@@ -1,29 +1,38 @@
 \chapter{Introducción}
 
-Este proyecto es software libre, y está \href{https://github.com/jero-dev/proyecto-tfg/LICENSE}{liberado con la licencia GPL}.\\
+Durante décadas, el mundo del videojuego se ha ido abriendo paso como uno de los principales entretenimientos de la sociedad. Ya desde su nacimiento, 
+no ha sido considerado barato, y todavía sigue con esa tendencia aunque cada vez sea más fácil encontrar ciertos títulos a menor precio.
 
-La intención de este proyecto es solucionar el siguiente problema:
+Es por eso que se intenta encontrar ofertas en las tiendas, tanto las especializadas en videojuegos como las grandes superficies, para poder comprar 
+los juegos a un precio más bajo, ya sea por seguir un presupuesto marcado, por optar a comprar más de un título o más razones que se pueden llegar a 
+dar.
 
-\begin{center}
-    \textbf{Un coleccionista quiere comprar un videojuego lo más barato posible, pero no quiere perder el tiempo buscando en distintas tiendas.}\\
-\end{center}
+También la demografía de los jugadores ha ido cambiando con el paso del tiempo. En un principio, los videojuegos eran un entretenimiento para niños, pero 
+ahora contamos con una gran cantidad de jugadores que sobrepasan los 25 años de edad según los datos que la Asociación Española de Videojuegos \cite{aevi} 
+dio el año pasado.
 
-Normalmente, esto llega a solucionarse con simplemente seguir algún canal de ofertas en plataformas como Telegram o Discord.
-En nuestro caso, estamos basándonos sobre todo en uno de los canales más utilizados para este tipo de problema: el canal Ofertas Juegos en Telegram.\\
+Es por eso que, teniendo en cuenta que el público mayoritario es un público adulto, se han llegado a crear plataformas donde llegar a compartir las 
+distintas ofertas que los usuarios han ido encontrando. Estas plataformas se pueden encontrar en distintos formatos, aunque principalmente se suele 
+utilizar Telegram \cite{telegram} o Discord \cite{discord} por sus opciones de canales \cite{canales_telegram} y servidores \cite{servidores_discord} 
+respectivamente.
 
-\begin{figure}[H]
+Un ejemplo de esto es el canal Ofertas Juegos en Telegram \footnote{Tienen su propia página web (https://ofertasjuegos.es/) con toda la información} 
+(fig. \ref{fig:canal_telegram_ofertas}). Este canal añade un mensaje por cada nueva bajada de precio de cualquier producto en cada tienda, siendo 
+diferentes usuarios los que aportan estas ofertas mientras van buscando el mejor precio para el videojuego que quieren comprar.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[scale=0.3]{img/canal_telegram_ofertas}
-    \caption{Ejemplo de canal de ofertas en Telegram}
+    \includegraphics[scale=0.57]{figuras/canal_telegram_ofertas}
+    \caption{Ejemplo de canal de ofertas en Telegram.}
     \label{fig:canal_telegram_ofertas}
 \end{figure}
 
-Estos canales añaden un mensaje por cada nueva bajada de precio de cualquier producto en cada tienda, así que nos dan una solución,
-pero que puede llegar a ser bastante difícil encontrar la última oferta del producto que queramos adquirir por cada una de ellas 
-si se han dado otras ofertas para otros productos.\\
+De por sí, esto parece más que una solución viable para la mayoría de la gente, pero encontramos un problema: \textbf{si se quiere comprar un videojuego en 
+concreto, puede llegar a ser bastante difícil encontrar la última oferta del producto que queramos adquirir por cada una de las tiendas si se han dado 
+otras ofertas para otros productos.}
 
 Contando con esto, podemos decir que el objetivo de este proyecto es el siguiente:
 
 \begin{center}
-    \textbf{Resumir en un solo texto las últimas ofertas de cada tienda obteniendo los datos de este tipo de canales.}\\
+    \textbf{Resumir en un solo texto las últimas ofertas de cada tienda por cada videojuego.}
 \end{center}
