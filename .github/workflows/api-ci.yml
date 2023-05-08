@@ -2,6 +2,8 @@ name: API - Integración Contínua
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/api/**'
 
@@ -34,7 +36,7 @@ jobs:
           dotnet-version: '7.x'
       
       - name: Restaurar dependencias
-        run: dotnet restore
+        run: dotnet restore PriceScrapperAPI.sln
       
       - name: Compilar la API
         run: dotnet build PriceScrapperAPI.sln --configuration Release --no-restore
