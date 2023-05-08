@@ -1,0 +1,42 @@
+name: API - Integración Contínua
+
+on:
+  push:
+    paths:
+      - 'src/api/**'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/api/**'
+
+jobs:
+  
+  build:
+
+    name: Compilación y pruebas unitarias
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src/api
+    
+    steps:
+
+      - name: Inicializar el repositorio
+        uses: actions/checkout@v3
+      
+      - name: Obtener .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x'
+      
+      - name: Restaurar dependencias
+        run: dotnet restore
+      
+      - name: Compilar la API
+        run: dotnet build PriceScrapperAPI.sln --configuration Release --no-restore
+      
+      # Añadir el paso de pruebas unitarias cuando se implementen
