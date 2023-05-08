@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceScrapperAPI", "PriceScrapperAPI.csproj", "{2590D71C-9259-4D18-8A5C-635311C38A1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceScrapperAPI", "PriceScrapperAPI/PriceScrapperAPI.csproj", "{2590D71C-9259-4D18-8A5C-635311C38A1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
