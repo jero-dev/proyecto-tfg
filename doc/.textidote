@@ -1,0 +1,4 @@
+ --check es --dict diccionario.txt
+ --ignore "sh:nonp,sh:nobreak,lt:es:SPACE_UNITIES"
+ --remove-macros begin,bfseries,centeroffset,centering,end,oddsidemargin,evensidemargin,textwidth,tableofcontents,listoffigures,listoftables,cleardoublepage,setlength
+ --output html proyecto.tex

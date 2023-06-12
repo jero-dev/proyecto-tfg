@@ -31,9 +31,8 @@ jobs:
       uses: ChiefGokhlayeh/textidote-action@v5
       id: lint
       with:
-          root_file: proyecto.tex
-          working_directory: doc
-          args: --check es
+        root_file: proyecto.tex
+        working_directory: doc
 
     - name: Publicar el informe de TeXtidote
       uses: actions/upload-artifact@v2
