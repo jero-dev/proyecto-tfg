@@ -21,3 +21,9 @@ make install
 ```bash
 make build
 ```
+
+## Comprobación de estilo
+
+```bash
+make check
+```
