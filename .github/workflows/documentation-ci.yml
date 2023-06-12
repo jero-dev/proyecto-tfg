@@ -31,15 +31,18 @@ jobs:
       uses: ChiefGokhlayeh/textidote-action@v5
       id: lint
       with:
-          root_file: proyecto.tex
-          working_directory: doc
-          args: --check es
+        root_file: proyecto.tex
+        working_directory: doc
 
     - name: Publicar el informe de TeXtidote
       uses: actions/upload-artifact@v2
       with:
         name: textidote_report
         path: doc/report.html
+
+    - name: Parar la compilación si hay problemas
+      if: ${{ steps.lint.outputs.num_warnings != 0 }}
+      run: 'echo "Se han encontrado errores en el documento. Por favor, revisa el informe de TeXtidote."; exit 1'
 
     - name: Compilar documentación
       uses: xu-cheng/latex-action@v2
