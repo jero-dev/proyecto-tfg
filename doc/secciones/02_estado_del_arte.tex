@@ -1,0 +1,54 @@
+\chapter{Estado del arte}
+
+Como se ha mencionado anteriormente, hay bastantes maneras de buscar ofertas de 
+videojuegos, ya sea por portales web como \url{chollometro.com}, o por canales de 
+comunicación, teniendo como ejemplo específico a \url{ofertasjuegos.es} en lo que 
+respecta a canales de Telegram.
+
+Es cierto que podemos buscar ofertas en ambos métodos (sobre todo en el ejemplo 
+puesto para portales web dedicados a ello), pero aun así no podemos saber cuándo 
+hay una oferta de algo que nos interesa al momento si no estamos revisando todo el 
+rato el portal web, o puede que se pierda en todos los mensajes que se envían en el 
+canal de Telegram.
+
+Es por esto que este proyecto pretende coleccionar las ofertas desde un mismo sitio 
+para que sea fácil explorar por ellas, buscando específicamente lo que nos interesa 
+y sin la necesidad de pasar por todas esas ofertas que son irrelevantes para 
+nosotros.
+
+Esto ayuda a que el usuario pueda centrarse solamente en un único sitio y no tener 
+la necesidad de estar entrando en varios portales web o canales de Telegram para 
+encontrar ofertas.
+
+Para el desarrollo del proyecto, necesitamos obtener la información de los 
+distintos sitios de ofertas. En este caso, vamos a centrarnos primero en obtener 
+los datos desde Telegram, que cuenta con una API para poder obtener los mensajes de 
+un canal o chat, además de su uso extendido para los famosos bots de la aplicación.
+
+Por tanto, es fácil encontrar librerías que permiten utilizar la API de Telegram de  
+una manera más sencilla. Dentro de la propia documentación de Telegram 
+podemos encontrar una lista curada 
+\footnote{Bot API Library Examples \url{https://core.telegram.org/bots/samples}} de 
+los que tienen más librerías.
+
+Teniendo esto en cuenta, vamos a categorizar los lenguajes para elegir la mejor 
+opción para el proyecto.
+
+Las categorías serían:
+
+\begin{itemize}
+    \item \textbf{Facilidad de aprendizaje/entendimiento}: Queremos un lenguaje que 
+    si no lo conocemos, podamos adaptarnos rápidamente a él.
+    \item \textbf{Comunidad}: Si contamos no solamente que el lenguaje sea de
+    rápida adaptación, sino que además tenga una comunidad extensa, nos será más 
+    fácil resolver nuestras dudas.
+    \item \textbf{Eficiencia del lenguaje}: Además de los puntos anteriores, es 
+    importante elegir un lenguaje que sea eficiente en cuanto a recursos, ya que 
+    podemos encontrarnos con que consuma demasiada memoria o haga que nuestra 
+    factura sea un poco más alta de lo que esperábamos. Esto ya se ha explorado y 
+    se puede encontrar una lista curada \cite{eficiencia} de los lenguajes.
+\end{itemize}
+
+Teniendo en cuenta estas categorías y la lista que nos proporcionan en la 
+documentación de Telegram, hemos decidido utilizar Go como lenguaje de programación 
+para nuestro proyecto.
