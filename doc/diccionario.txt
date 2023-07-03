@@ -15,3 +15,13 @@ follow
 game
 prices
 2.5ex
+Kanban
+Driven
+Development
+Continuous
+Integration
+Git
+Milestones
+Milestone
+Projects
+Actions
