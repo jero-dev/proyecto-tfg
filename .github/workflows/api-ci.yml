@@ -34,7 +34,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.20'
-      
+
+      - name: Obtener las dependencias
+        run: go mod tidy
+
       - name: Compilar la API
         run: go build -v
       
