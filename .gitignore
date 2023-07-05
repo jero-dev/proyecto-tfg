@@ -13,8 +13,11 @@ report.html
 
 # Ignore in API
 
+# Go
+**/go.sum
+
 # JetBrains IDEs
 .idea/
 
-# Executables
+# Ejecutables
 *.exe
