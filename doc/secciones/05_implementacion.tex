@@ -1,5 +1,24 @@
-% \chapter{Implementación}
+\chapter{Implementación}
 
-% La implementación del software se ha dividido en hitos. Estos, han sido definidos en GitHub
-% y cada uno de ellos contiene un grupo de \textit{issues} que se corresponden con las distintas
-% mejoras que se han ido incorporando al software a lo largo de su desarrollo.
+Como llegamos a mencionar en la implementación de planificación, el proyecto se ha 
+dividido en varios hitos o Milestones (se les puede echar un vistazo en la 
+\href{https://github.com/jero-dev/proyecto-tfg/milestones}{página del repositorio 
+en GitHub}) en el que vamos a concentrar las distintas tareas que debemos de 
+realizar para completar cada uno de ellos.
+
+También habiendo realizado el análisis del problema mediante diseño dirigido por 
+dominios, hemos podido dividir en tres los servicios de dominio para finalmente 
+obtener nuestro producto mínimo viable. Estos serían:
+
+\begin{itemize}
+    \item \textbf{Obtención de información:} Necesitamos obtener las ofertas desde 
+    los canales y servidores que podemos encontrar en Telegram y Discord 
+    respectivamente.
+    \item \textbf{Gestión de productos:} Necesitamos almacenar los productos que 
+    los usuarios buscarán también.
+    \item \textbf{Gestión de ofertas:} Necesitamos almacenar las ofertas que 
+    dependerán del producto y la tienda. También queremos saber si la oferta está
+    todavía vigente o no.
+\end{itemize}
+
+Con esto en mente, empecemos con el desarrollo del proyecto.
