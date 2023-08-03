@@ -6,7 +6,7 @@ dividido en varios hitos o Milestones (se les puede echar un vistazo en la
 en GitHub}) en el que vamos a concentrar las distintas tareas que debemos de 
 realizar para completar cada uno de ellos.
 
-También habiendo realizado el análisis del problema mediante diseño dirigido por 
+También habiendo hecho el análisis del problema mediante diseño dirigido por 
 dominios, hemos podido dividir en tres los servicios de dominio para finalmente 
 obtener nuestro producto mínimo viable. Estos serían:
 
@@ -22,3 +22,34 @@ obtener nuestro producto mínimo viable. Estos serían:
 \end{itemize}
 
 Con esto en mente, empecemos con el desarrollo del proyecto.
+
+\section{Obtención de información}
+
+Primero, debemos de tener información de las ofertas. Como llegamos a mencionar en 
+capítulos anteriores, podemos llegar a encontrarlas en canales de Telegram y en 
+servidores de Discord. Ahora, ¿cómo podemos llegar a automatizar la obtención de 
+esa información? Pues utilizando algo que tienen en común ambos servicios: los bots.
+
+Los bots son muy populares tanto en Telegram como en Discord. Las comunidades de 
+los dos servicios los usan para automatizar mensajes de bienvenida o procesos de 
+autenticación al llegar a un nuevo servidor o grupo, llegando a preguntar que le 
+llegó a interesar al usuario acerca de la comunidad a la que se está uniendo o 
+simplemente enviar un emoji, para así poder comprobar que no es otro bot pero con 
+intenciones de realizar spam o cualquier otra actividad maliciosa.
+
+Ahora, ¿cómo se crea un bot? Para ambos casos existe una API pública con la que 
+podemos interactuar y llegar a automatizar los procesos que queramos. Para ello 
+necesitaremos entonces implementar dos programas (uno para cada uno de los 
+servicios) que recibirán y leerán los mensajes de los distintos canales y 
+servidores.
+
+Estos programas los escribiremos con el lenguaje de programación Go, ya que, como 
+llegamos a analizar en el capítulo acerca del estado del arte, es un lenguaje que 
+cumple con las categorías que llegamos a enunciar. Además, necesitaremos desplegar 
+los programas resultantes para que estén accesibles y para ello usaremos Azure 
+como plataforma donde alojarlos, siendo un servicio de \textit{cloud computing} 
+que es muy empleado a nivel profesional y que cuenta con un programa para 
+estudiantes que nos permite utilizarlo de forma gratuita.
+
+A partir de aquí, vamos a separar el desarrollo en dos partes: cómo obtenemos la 
+información desde Telegram y cómo lo hacemos desde Discord.
