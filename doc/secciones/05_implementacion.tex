@@ -53,3 +53,26 @@ estudiantes que nos permite utilizarlo de forma gratuita.
 
 A partir de aquí, vamos a separar el desarrollo en dos partes: cómo obtenemos la 
 información desde Telegram y cómo lo hacemos desde Discord.
+
+\subsection{Obtención de información en Telegram}
+
+Para crear nuestro bot de Telegram, necesitaremos seguir los pasos documentados en 
+el \href{https://core.telegram.org/bots#how-do-i-create-a-bot}{sitio oficial} para 
+tener la infraestructura lista antes de empezar a programar.
+
+Habiendo seguido los pasos necesarios que vienen en la documentación, empezamos a 
+programar nuestro bot.
+
+Como comentamos en el capítulo del estado del arte \ref{chapter:02_estado_del_arte}, 
+cada lenguaje cuenta con una librería para interactuar con la API de bots de 
+Telegram. En nuestro caso, hemos utilizado una de las que hay para Go que es la más 
+extendida (puede encontrarse 
+\href{https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api/v5}{aquí}) 
+que nos ofrece todo lo necesario.
+
+En este caso, lo único que queremos es obtener la información. No la vamos a darle 
+formato o encontrar la información que nos interesa, ya que de eso se encargará el 
+programa principal que haremos más adelante. Así que, lo que realmente hará es 
+obtener cualquier mensaje que reciba de cualquier tipo de chat en el que se 
+encuentre (aunque en el código se debe de diferenciar si es un canal o si es un 
+grupo) y enviarlo a nuestro servicio principal.
