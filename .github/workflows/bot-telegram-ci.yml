@@ -1,0 +1,47 @@
+name: Bot de Telegram - Integración Continua
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "src/bot/telegram/**"
+  pull_request:
+    paths:
+      - "src/bot/telegram/**"
+
+jobs:
+  
+  build:
+    
+    name: Compilación del Bot de Telegram
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src/bot/telegram
+
+    steps:
+
+    - name: Inicializar el repositorio
+      uses: actions/checkout@v3
+    
+    - name: Obtener Go para la compilación
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Obtener las dependencias
+      run: go mod tidy
+
+    - name: Compilar el bot
+      run: go build -v
+    
+    - name: Publicar el bot en el workflow
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: telegram-bot
+        path: telegram
+        if-no-files-found: error
