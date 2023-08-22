@@ -57,6 +57,13 @@ jobs:
 
     steps:
 
+    - name: Acceder a Azure
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
     - name: Obtener el bot del workflow
       uses: actions/download-artifact@v3
       with:
@@ -65,5 +72,5 @@ jobs:
     - name: Desplegar el bot en Azure
       uses: azure/functions-action@v1.5.1
       with:
-        app-name: ${{ env.TELEGRAM_BOT_FUNCTION_APP_NAME }}
+        app-name: ${{ vars.TELEGRAM_BOT_FUNCTION_APP_NAME }}
         publish-profile: ${{ secrets.TELEGRAM_BOT_FUNCTIONAPP_PUBLISH_PROFILE }}
