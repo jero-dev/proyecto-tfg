@@ -2,8 +2,6 @@ name: Bot de Telegram - Integración Continua
 
 on:
   push:
-    branches:
-      - "main"
     paths:
       - "src/bot/telegram/**"
   pull_request:
@@ -66,7 +64,7 @@ jobs:
         name: telegram-bot
     
     - name: Desplegar el bot en Azure
-      uses: Azure/functions-action@v1.5.1
+      uses: azure/functions-action@v1.5.1
       with:
         app-name: ${{ env.TELEGRAM_BOT_FUNCTION_APP_NAME }}
         publish-profile: ${{ secrets.TELEGRAM_BOT_FUNCTIONAPP_PUBLISH_PROFILE }}
