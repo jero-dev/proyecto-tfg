@@ -42,7 +42,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: telegram-bot
-        path: ${{ github.workspace }}/src/bot/telegram
+        path: |
+          ./telegram
+          ./host.json
+          ./**/function.json
         if-no-files-found: error
   
   deploy:
