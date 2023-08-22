@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "src/bot/telegram/**"
+      - ".github/workflows/telegram-bot.yml"
   pull_request:
     paths:
       - "src/bot/telegram/**"
@@ -41,9 +42,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: telegram-bot
-        path: |
-          !**/*.go
-          !**/go.*
+        path: ${{ github.workspace }}/src/bot/telegram
         if-no-files-found: error
   
   deploy:
