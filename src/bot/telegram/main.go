@@ -18,21 +18,21 @@ func main() {
 		log.Panic(botError)
 	}
 
-	listenAddr := ":8080"
+	listenPort := ":8080"
 	if val, ok := os.LookupEnv("FUNCTIONS_CUSTOMHANDLER_PORT"); ok {
-		listenAddr = ":" + val
+		listenPort = ":" + val
 	}
 
-	http.HandleFunc("/api/setup", func(w http.ResponseWriter, r *http.Request) {
-		setUpWebhook(w, r, bot)
+	http.HandleFunc("/api/setup", func(writer http.ResponseWriter, request *http.Request) {
+		setUpWebhook(writer, request, bot)
 	})
 	http.HandleFunc("/api/handleUpdate", handleTelegramUpdate)
-	log.Fatal(http.ListenAndServe(listenAddr, nil))
+	log.Fatal(http.ListenAndServe(listenPort, nil))
 }
 
-func setUpWebhook(w http.ResponseWriter, r *http.Request, bot *telegram.BotAPI) {
+func setUpWebhook(writer http.ResponseWriter, response *http.Request, bot *telegram.BotAPI) {
 
-	webHook, _ := telegram.NewWebhook("https://" + r.Host + "/api/handleUpdate")
+	webHook, _ := telegram.NewWebhook("https://" + response.Host + "/api/handleUpdate")
 
 	_, webHookError := bot.Request(webHook)
 
@@ -40,16 +40,16 @@ func setUpWebhook(w http.ResponseWriter, r *http.Request, bot *telegram.BotAPI) 
 		log.Fatal(webHookError)
 	}
 
-	_, printError := fmt.Fprint(w, "Se ha configurado el webhook correctamente")
+	_, printError := fmt.Fprint(writer, "Se ha configurado el webhook correctamente")
 	if printError != nil {
 		return
 	}
 }
 
-func handleTelegramUpdate(w http.ResponseWriter, r *http.Request) {
+func handleTelegramUpdate(writer http.ResponseWriter, request *http.Request) {
 
 	update := &telegram.Update{}
-	if decodeError := json.NewDecoder(r.Body).Decode(update); decodeError != nil {
+	if decodeError := json.NewDecoder(request.Body).Decode(update); decodeError != nil {
 		log.Printf("No se ha podido decodificar el contenido de la petición: %s", decodeError)
 		return
 	}
@@ -66,7 +66,7 @@ func handleTelegramUpdate(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Mandar mensaje a la API
 
-	_, printError := fmt.Fprint(w, "Se ha enviado el mensaje a la API. Contenido: "+message)
+	_, printError := fmt.Fprint(writer, "Se ha enviado el mensaje a la API. Contenido: "+message)
 	if printError != nil {
 		return
 	}
