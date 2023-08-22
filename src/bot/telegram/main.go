@@ -26,7 +26,9 @@ func main() {
 	http.HandleFunc("/api/setup", func(writer http.ResponseWriter, request *http.Request) {
 		setUpWebhook(writer, request, bot)
 	})
-	http.HandleFunc("/api/handleUpdate", handleTelegramUpdate)
+	http.HandleFunc("/api/handleUpdate", func(writer http.ResponseWriter, request *http.Request) {
+		handleTelegramUpdate(writer, request, bot)
+	})
 	log.Fatal(http.ListenAndServe(listenPort, nil))
 }
 
@@ -46,7 +48,7 @@ func setUpWebhook(writer http.ResponseWriter, response *http.Request, bot *teleg
 	}
 }
 
-func handleTelegramUpdate(writer http.ResponseWriter, request *http.Request) {
+func handleTelegramUpdate(writer http.ResponseWriter, request *http.Request, bot *telegram.BotAPI) {
 
 	update := &telegram.Update{}
 	if decodeError := json.NewDecoder(request.Body).Decode(update); decodeError != nil {
@@ -65,6 +67,7 @@ func handleTelegramUpdate(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	// TODO: Mandar mensaje a la API
+	bot.Send(telegram.NewMessage(update.Message.Chat.ID, "Se ha recibido el mensaje: "+message))
 
 	_, printError := fmt.Fprint(writer, "Se ha enviado el mensaje a la API. Contenido: "+message)
 	if printError != nil {
