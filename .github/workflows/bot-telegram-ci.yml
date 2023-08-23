@@ -9,6 +9,11 @@ on:
     paths:
       - "src/bot/telegram/**"
 
+env:
+
+  TELEGRAM_BOT_APP_NAME: "app-vidya-sale-telegram-bot-westeurope"
+  GO_VERSION: "1.19"
+
 jobs:
   
   build:
@@ -29,7 +34,7 @@ jobs:
     - name: Obtener Go para la compilación
       uses: actions/setup-go@v4
       with:
-        go-version: '1.21'
+        go-version: ${{ env.GO_VERSION }}
 
     - name: Obtener las dependencias
       run: go mod tidy
@@ -68,7 +73,6 @@ jobs:
         name: telegram-bot
     
     - name: Desplegar el bot en Azure
-      uses: azure/functions-action@v1.5.1
+      uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ vars.TELEGRAM_BOT_FUNCTION_APP_NAME }}
-        publish-profile: ${{ secrets.TELEGRAM_BOT_FUNCTIONAPP_PUBLISH_PROFILE }}
+        app-name: ${{ env.TELEGRAM_BOT_APP_NAME }}
