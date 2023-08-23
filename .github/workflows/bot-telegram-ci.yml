@@ -2,9 +2,10 @@ name: Bot de Telegram - Integración Continua
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "src/bot/telegram/**"
-      - ".github/workflows/bot-telegram-ci.yml"
   pull_request:
     paths:
       - "src/bot/telegram/**"
