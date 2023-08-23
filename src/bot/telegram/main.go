@@ -19,9 +19,6 @@ func main() {
 	}
 
 	listenPort := ":8080"
-	if val, ok := os.LookupEnv("FUNCTIONS_CUSTOMHANDLER_PORT"); ok {
-		listenPort = ":" + val
-	}
 
 	http.HandleFunc("/api/setup", func(writer http.ResponseWriter, request *http.Request) {
 		setUpWebhook(writer, request, bot)
