@@ -29,9 +29,9 @@ func main() {
 	log.Fatal(http.ListenAndServe(listenPort, nil))
 }
 
-func setUpWebhook(writer http.ResponseWriter, response *http.Request, bot *telegram.BotAPI) {
+func setUpWebhook(writer http.ResponseWriter, request *http.Request, bot *telegram.BotAPI) {
 
-	webHook, _ := telegram.NewWebhook("https://" + response.Host + "/api/handleUpdate")
+	webHook, _ := telegram.NewWebhook("https://" + request.Host + "/api/handleUpdate")
 
 	_, webHookError := bot.Request(webHook)
 
