@@ -65,7 +65,7 @@ programar nuestro bot.
 
 Como comentamos en el capítulo del estado del arte \ref{chapter:02_estado_del_arte}, 
 cada lenguaje cuenta con una librería para interactuar con la API de bots de 
-Telegram. En nuestro caso, hemos utilizado una de las que hay para Go que es la más 
+Telegram. En nuestro caso, hemos empleado una de las que hay para Go que es la más 
 extendida (puede encontrarse 
 \href{https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api/v5}{aquí}) 
 que nos ofrece todo lo necesario.
@@ -76,3 +76,15 @@ programa principal que haremos más adelante. Así que, lo que realmente hará e
 obtener cualquier mensaje que reciba de cualquier tipo de chat en el que se 
 encuentre (aunque en el código se debe de diferenciar si es un canal o si es un 
 grupo) y enviarlo a nuestro servicio principal.
+
+El código resultante de la implementación no es muy extenso, pero realiza todas las 
+actividades que requerimos. Para acceder al código, se puede ir mediante 
+\href{https://github.com/jero-dev/proyecto-tfg/blob/main/src/bot/telegram/main.go}{este enlace}.
+
+Además, en la implementación de nuestro \textit{workflow} 
+tenemos no solamente nuestra comprobación de CI, sino que hemos añadido también el 
+despliegue automático del bot en Azure, haciendo que cada vez que se añadan cambios 
+de funcionalidad en el bot, estos sean desplegados sin tener que hacer ninguna 
+acción por nuestra parte. Si se quiere revisar el código de la automatización, se 
+puede seguir 
+\href{https://github.com/jero-dev/proyecto-tfg/blob/main/.github/workflows/bot-telegram-ci.yml}{este otro enlace}.
