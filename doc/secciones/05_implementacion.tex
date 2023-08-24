@@ -81,6 +81,19 @@ El código resultante de la implementación no es muy extenso, pero realiza toda
 actividades que requerimos. Para acceder al código, se puede ir mediante 
 \href{https://github.com/jero-dev/proyecto-tfg/blob/main/src/bot/telegram/main.go}{este enlace}.
 
+Lo que hemos creado es una API que tiene dos rutas: una por donde recibir los 
+mensajes y otra que configure la primera como un webhook para la API de Telegram. 
+El porqué de esto es simple: según la documentación, podemos comprobar las 
+actualizaciones que nos llegan desde la API de Telegram de dos maneras. Una de 
+ellas requiere estar comprobando constantemente dentro de un bucle si obtenemos 
+una actualización o no, mientras que el otro método es configurar una ruta a la que 
+la API lanzará automáticamente las actualizaciones.
+
+Como se puede observar, esto último es mucho más eficiente, ya que aunque recibamos 
+mensajes constantemente,  si siguiéramos el primer método el programa estaría 
+ejecutando un bucle infinito que consume recursos, mientras que con la indicación 
+de ruta es simplemente quedarse escuchando por un puerto.
+
 Además, en la implementación de nuestro \textit{workflow} 
 tenemos no solamente nuestra comprobación de CI, sino que hemos añadido también el 
 despliegue automático del bot en Azure, haciendo que cada vez que se añadan cambios 
