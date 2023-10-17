@@ -8,35 +8,19 @@ concentrarnos totalmente en él.
 \begin{itemize}
     \item \textbf{Dominio del problema:} Tenemos como dominio del problema la 
     gestión de ofertas y promociones de productos (aunque nos centremos en 
-    videojuegos). Los conceptos (entidades) que hemos identificado son:
-    \begin{itemize}
-        \item \textbf{Producto:} Bien o servicio que se ofrece en el mercado.
-        \item \textbf{Precio:} Cantidad de dinero que se asigna a un producto.
-        \item \textbf{Oferta:} Reducción del precio de un producto por tiempo 
-        limitado.
-        \item \textbf{Tienda:} Establecimiento donde se venden productos.
-    \end{itemize}
-    Habiendo comentado acerca de usuarios, los ejemplos de usuario que vamos a 
-    seguir para el desarrollo del proyecto son:
-    \begin{itemize}
-        \item \textbf{Estudiante:} Usuario que no tiene un gran presupuesto para 
-        comprar los productos que quiere y desea estar informado de las ofertas que 
-        le permitan adquirirlos.
-        \item \textbf{Fanático o coleccionista:} Usuario que tiene bastante 
-        presupuesto en comparación al usuario anterior, pero que prefiere obtener 
-        el mayor número de productos posibles por el mismo precio.
-    \end{itemize}
-    \item \textbf{Agregados:} Estos son conjuntos de entidades y/o valores que se 
-    tratan como una sola unidad. En este caso, podemos tener el agregado de 'oferta 
-    de producto', que se compondría de las entidades 'producto', 'oferta' y 'tienda'.
+    videojuegos). En cuanto a los conceptos (entidades) que hemos identificado, 
+    solamente tenemos uno: el de \textbf{oferta}. Estos se identificarán con un 
+    \textbf{identificador único}, el \textbf{nombre} del producto, la 
+    \textbf{plataforma} de este último, el \textbf{precio} de la oferta, el 
+    \textbf{enlace} a la tienda con dicha oferta y la \textbf{fecha} se encontró 
+    esa oferta.
     \item \textbf{Contexto delimitado:} Para centrarnos en el problema, tenemos que 
     delimitar el contexto del mismo. Aquí tenemos claro que el contexto es la 
     gestión de ofertas.
     \item \textbf{Servicios de dominio:} Los servicios de dominio encapsulan la 
     lógica de negocio que no pertenece a ninguna entidad o valor. Aquí podemos sacar 
-    tres claros servicios de dominio: 'obtención de información', 'gestión de 
-    productos' y 'gestión de ofertas'.
-    \item \textbf{Eventos de dominio:} Estos son sucesos significativos que ocurren 
-    dentro del dominio. Aquí primordialmente tendríamos dos eventos: el de 'oferta 
-    disponible' y el de 'oferta expirada'.
+    un claro servicio de dominio: el procesamiento de los mensajes recibidos.
 \end{itemize}
+
+Teniendo el análisis realizado, podemos plasmarlo directamente a la estructura de 
+nuestra aplicación.
