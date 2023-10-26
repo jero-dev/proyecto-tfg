@@ -16,13 +16,13 @@ make install
 
 **Nota**: Puede que necesites usar `sudo` antes de seguir con el comando para la instalación.
 
-### Compilación
+## Compilación
 
 ```bash
 make build
 ```
 
-### Comprobación de estilo
+## Comprobación de estilo
 
 ```bash
 make check
