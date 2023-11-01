@@ -1,5 +1,92 @@
-% \chapter{Implementación}
+\chapter{Implementación}
 
-% La implementación del software se ha dividido en hitos. Estos, han sido definidos en GitHub
-% y cada uno de ellos contiene un grupo de \textit{issues} que se corresponden con las distintas
-% mejoras que se han ido incorporando al software a lo largo de su desarrollo.
+Ya teniendo todo planificado y sabiendo que metodologías vamos a seguir, 
+empezaremos con la implementación de la solución. Lo primero, por supuesto, es 
+haber creado nuestro \href{https://github.com/jero-dev/proyecto-tfg}
+{repositorio en GitHub} donde subir todos los progresos que hagamos no solamente en 
+el propio desarrollo de la solución, sino también en la redacción de la memoria del 
+trabajo.
+
+En cuanto a los otros elementos que hemos mencionado como las 
+\href{https://github.com/jero-dev/proyecto-tfg/issues}{issues}, los 
+\href{https://github.com/jero-dev/proyecto-tfg/milestones}{milestones} y 
+\href{https://github.com/users/jero-dev/projects/1}{nuestro tablero Kanban}, se 
+pueden encontrar en los enlaces que se encuentran en este párrafo.
+
+Con todo esto ya realizado, es momento de empezar a identificar las historias de 
+usuario que podemos encontrar gracias a la definición de personas que llegamos a 
+realizar en el capítulo de introducción.
+
+\section{Historias de usuario}
+
+Habiendo identificado los distintos usuarios que hemos encontrado, podemos 
+desarrollar las historias de usuario relacionadas o casos de uso que se pueden 
+desarrollar para este proyecto. Para ello, hemos definido las siguientes historias:
+
+\subsection{[HU01] Buscar videojuegos por nombre}
+
+Como persona menor de 20 años/coleccionista, quiero poder buscar un videojuego por 
+su nombre para obtener las distintas tiendas que lo venden y su precio, además de 
+su enlace de compra para cada una.
+
+\textbf{Condiciones de satisfacción}:
+
+\begin{itemize}
+    \item La solución debe de poder buscar un videojuego por su nombre.
+    \item La solución debe de poder obtener las distintas tiendas que venden el 
+    videojuego.
+    \item La solución debe de poder obtener el precio de cada tienda.
+    \item La solución debe de poder obtener el enlace de compra del videojuego para 
+    cada tienda.
+\end{itemize}
+
+\subsection{[HU02] Obtener avisos automáticos acerca de un videojuego}
+
+Como coleccionista, tendría en cuenta la opción de obtener avisos automáticos de la 
+disponibilidad de un videojuego en concreto en el que tengo interés.
+
+\textbf{Condiciones de satisfacción}:
+
+\begin{itemize}
+    \item La solución debe de ofrecer avisos automáticos de la disponibilidad de un 
+    videojuego.
+    \item En el aviso debe de aparecer el precio de cada tienda.
+    \item En el aviso debe de aparecer el enlace de compra del videojuego para 
+    cada tienda.
+\end{itemize}
+
+En nuestro caso nos centraremos principalmente en la primera historia de usuario, 
+completando la segunda en caso de que tengamos tiempo suficiente para ello.
+
+\section{Diseño de la aplicación}
+
+Teniendo ya las historias de usuario, vamos a empezar a diseñar la solución. Para 
+ello, seguiremos el diseño dirigido por dominios (en inglés, Domain Driven Design o 
+DDD) \cite{ddd} para identificar de manera correcta el dominio del problema y poder 
+así concentrarnos totalmente en él.
+
+\begin{itemize}
+    \item \textbf{Dominio del problema:} Tenemos como dominio del problema la 
+    gestión de ofertas y promociones de productos (aunque nos centremos en 
+    videojuegos). En cuanto a los conceptos (entidades) que hemos identificado, 
+    tenemos solamente uno: el de \textbf{producto}. Aparte, tenemos también un 
+    agregado que es el de \textbf{oferta}.
+    \begin{itemize}
+        \item \textbf{Producto}: Las propiedades de esta entidad serían un 
+        \textbf{identificador único}, el \textbf{nombre} del producto y la 
+        \textbf{plataforma} en la que se juega.
+        \item \textbf{Oferta}: Las propiedades de esta entidad serían un 
+        \textbf{producto}, el \textbf{enlace} a la tienda donde se encuentra la 
+        oferta y el \textbf{precio} de esta.
+    \end{itemize}
+    \item \textbf{Contexto delimitado:} Para centrarnos en el problema, tenemos que 
+    delimitar el contexto del mismo. Aquí tenemos claro que el contexto es la 
+    gestión de ofertas.
+    \item \textbf{Servicios de dominio:} Los servicios de dominio encapsulan la 
+    lógica de negocio que no pertenece a ninguna entidad o valor. Aquí podemos sacar 
+    un claro servicio de dominio: el procesamiento de los mensajes recibidos.
+\end{itemize}
+
+Teniendo el análisis realizado, podemos plasmarlo directamente a la estructura de 
+nuestra aplicación.
+
