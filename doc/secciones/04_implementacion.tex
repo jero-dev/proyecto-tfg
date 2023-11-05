@@ -92,36 +92,36 @@ así concentrarnos totalmente en él.
 \end{itemize}
 
 Teniendo el análisis realizado, podemos plasmarlo directamente a la estructura de 
-nuestra aplicación. Primero, crearemos un directorio llamado \tt{entity} donde 
-guardaremos la entidad \tt{VideoGame} con las propiedades mencionadas. Después, 
-creamos otro directorio llamado \tt{value\_object} donde guardaremos el ``value 
-object'' de \tt{Offer} también con sus propiedades apropiadas.
+nuestra aplicación. Primero, crearemos un directorio llamado \verb|entity| donde 
+guardaremos la entidad \verb|VideoGame| con las propiedades mencionadas. Después, 
+añadimos otro directorio llamado \verb|value_object| donde guardaremos el ``value 
+object'' de \verb|Offer| también con sus propiedades apropiadas.
 
 Este tipo de datos son básicos, sin ningún tipo de método fuera de un constructor y 
-dos métodos de acceso para las propiedades de \tt{Offer}. Por ello, no vamos a 
-crear pruebas unitarias para ellos.
+dos métodos de acceso para las propiedades de \verb|Offer|. Por ello, no vamos a 
+tener pruebas unitarias para ellos.
 
 Siguiendo con los conceptos que hemos identificado, queda el agregado de 
-\tt{Product}. Este va a estar contenido en otro directorio llamado \tt{aggregate} 
-en el que encontraremos tanto el tipo \tt{Product} como también las pruebas 
-unitarias para el mismo divididos en dos ficheros: \tt{product.go} y 
-\tt{product\_test.go}.
+\verb|Product|. Este va a estar contenido en otro directorio llamado 
+\verb|aggregate| en el que encontraremos tanto el tipo \verb|Product| como también 
+las pruebas unitarias para el mismo en dos ficheros: \verb|product.go| y 
+\verb|product_test.go|.
 
 Necesitaremos guardar estos datos de alguna manera, así que añadiremos otro 
-directorio llamado \tt{domain} que contendrá otro llamado \tt{product}. Aquí 
-crearemos una interfaz que será la responsable de crear el contrato de cómo se debe 
-de comportar un repositorio (por ello llamaremos al fichero \tt{repository.go}) 
+directorio llamado \verb|domain| que contendrá otro llamado \verb|product|. Aquí 
+tendremos una interfaz que será la responsable de crear el contrato de cómo se debe 
+de comportar un repositorio (por ello llamaremos al fichero \verb|repository.go|) 
 para que no tengamos que depender de una tecnología en concreto. 
 
-Para tener nuestro producto mínimamente viable, crearemos primero un repositorio en 
-memoria que, si finalmente tenemos tiempo, podremos cambiar por uno que se conecte 
-a una base de datos de nuestra preferencia. Es por eso que crearemos otro 
-directorio llamado \tt{memory} con dos ficheros: \tt{memory.go} y su respectivo 
-fichero de pruebas unitarias \tt{memory\_test.go}.
+Para tener nuestro producto mínimamente viable, generaremos primero un repositorio 
+en memoria que, si finalmente tenemos tiempo, podremos cambiar por uno que se 
+conecte a una base de datos de nuestra preferencia. Con ello, tendremos otro  
+directorio llamado \verb|memory| con dos ficheros: \verb|memory.go| y su respectivo 
+fichero de pruebas unitarias \verb|memory_test.go|.
 
-Finalmente llegamos a los servicios (o en este caso solamente servicio) de dominio. 
-Crearemos un directorio llamado \tt{service} que contendrá un fichero llamado 
-\tt{message_processor.go}. Al ser una lógica más compleja, dejaremos la 
+Finalmente, llegamos a los servicios (o en este caso solamente servicio) de 
+dominio. Añadimos un directorio llamado \verb|service| que contendrá un fichero 
+llamado \verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
 implementación del servicio para la siguiente sección. También añadiremos el 
-fichero principal de esta aplicación que llamaremos \tt{api.go} ya que es lo que 
+fichero principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que 
 al final será esta aplicación: una API.
