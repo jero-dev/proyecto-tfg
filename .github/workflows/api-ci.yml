@@ -43,7 +43,7 @@ jobs:
       run: go build
     
     - name: Ejecutar las pruebas
-      run: go test -v .\...
+      run: go test -v ./...
 
     - name: Publicar la API en el workflow
       if: ${{ github.event_name != 'pull_request' }}
