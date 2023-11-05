@@ -23,6 +23,7 @@ var (
 type ProductRepository interface {
 	GetAll() ([]aggregates.Product, error)
 	GetByID(uuid.UUID) (aggregates.Product, error)
+	GetByNameAndPlatform(string, string) (aggregates.Product, error)
 	Add(aggregates.Product) error
 	Update(aggregates.Product) error
 }

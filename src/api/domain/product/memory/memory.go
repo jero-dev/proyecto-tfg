@@ -48,6 +48,17 @@ func (mr *MemoryRepository) GetByID(id uuid.UUID) (aggregates.Product, error) {
 	return aggregates.Product{}, product.ErrorProductNotFound
 }
 
+// GetByNameAndPlatform finds a product by its name and platform
+func (mr *MemoryRepository) GetByNameAndPlatform(name string, platform string) (aggregates.Product, error) {
+	for _, product := range mr.products {
+		if product.GetName() == name && product.GetPlatform() == platform {
+			return product, nil
+		}
+	}
+
+	return aggregates.Product{}, product.ErrorProductNotFound
+}
+
 // Add will add a new product to the repository
 func (mr *MemoryRepository) Add(productToAdd aggregates.Product) error {
 	if mr.products == nil {
