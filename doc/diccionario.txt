@@ -49,3 +49,4 @@ product_test
 repository
 memory_test
 message_processor
+offer_manager

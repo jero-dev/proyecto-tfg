@@ -87,8 +87,9 @@ así concentrarnos totalmente en él.
     delimitar el contexto del mismo. Aquí tenemos claro que el contexto es la 
     gestión de ofertas.
     \item \textbf{Servicios de dominio:} Los servicios de dominio encapsulan la 
-    lógica de negocio que no pertenece a ninguna entidad o valor. Aquí podemos sacar 
-    un claro servicio de dominio: el procesamiento de los mensajes recibidos.
+    lógica de negocio que no pertenece a ninguna entidad o valor. Aquí podemos 
+    encontrar dos claros servicios de dominio: el procesamiento de los mensajes y 
+    la gestión de las ofertas.
 \end{itemize}
 
 Teniendo el análisis realizado, podemos plasmarlo directamente a la estructura de 
@@ -119,9 +120,9 @@ conecte a una base de datos de nuestra preferencia. Con ello, tendremos otro
 directorio llamado \verb|memory| con dos ficheros: \verb|memory.go| y su respectivo 
 fichero de pruebas unitarias \verb|memory_test.go|.
 
-Finalmente, llegamos a los servicios (o en este caso solamente servicio) de 
-dominio. Añadimos un directorio llamado \verb|service| que contendrá un fichero 
-llamado \verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
-implementación del servicio para la siguiente sección. También añadiremos el 
-fichero principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que 
-al final será esta aplicación: una API.
+Finalmente, llegamos a los servicios de dominio. Añadimos un directorio llamado 
+\verb|service| que contendrá dos ficheros: \verb|offer_manager.go| y 
+\verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
+implementación de estos para la siguiente sección. También añadiremos el fichero 
+principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que al 
+final será esta aplicación: una API.
