@@ -121,23 +121,24 @@ directorio llamado \verb|memory| con dos ficheros: \verb|memory.go| y su respect
 fichero de pruebas unitarias \verb|memory_test.go|.
 
 Finalmente, llegamos a los servicios de dominio. Añadimos un directorio llamado 
-\verb|service| que contendrá dos ficheros: \verb|offer_manager.go| y 
-\verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
-implementación de estos para la siguiente sección. También añadiremos el fichero 
-principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que al 
-final será esta aplicación: una API.
+\verb|service| que contendrá los distintos casos de uso o servicios. Uno se llamará 
+\verb|offer_manager.go| y otro será \verb|message_processor.go|. Al ser una lógica 
+más compleja, dejaremos la implementación de estos para la siguiente sección. 
+También añadiremos el fichero principal de esta aplicación que llamaremos 
+\verb|api.go|, ya que es lo que al final será esta aplicación: una API.
 
 \section{Procesamiento de mensajes}
 
 Como hemos mencionado, el servicio de procesamiento de mensajes tiene una lógica 
-más compleja, ya que tiene que encontrar el videojuego que se encuentra en el 
-mensaje junto con la oferta mencionada en el mismo. Primero de todo, necesitamos 
-ver cómo es el tipo de mensajes que se encuentran en los canales de ofertas. El 
-siguiente texto es uno de los mensajes de los principales canales de ofertas:
+más compleja, por el hecho de que tiene que encontrar el videojuego que se 
+encuentra en el mensaje junto con la oferta mencionada en el mismo. Primero de 
+todo, necesitamos ver cómo es el tipo de mensajes que se encuentran en los canales 
+de ofertas. En la figura \ref{fig:ejemplo de oferta} se puede ver uno de los 
+mensajes de los principales canales de ofertas:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.3]{figuras/ejemplo-ofertasjuegos.png}
+    \includegraphics[scale=0.5]{figuras/ejemplo-ofertasjuegos.png}
     \caption{Ejemplo de una notificación de oferta.}
     \label{fig:ejemplo de oferta}
 \end{figure}
@@ -146,39 +147,32 @@ La mayoría de mensajes que se encuentran en los canales de ofertas tienen el mi
 formato, así que podemos aprovechar esta característica para llegar a procesarlos 
 con una expresión regular.
 
-A la hora de implementar el procesamiento de la información del mensaje, hemos de 
-comprobar si el producto existe en el repositorio. Si este no existe, se crea y 
-añadiremos la oferta que se menciona. Si existe, obtenemos la oferta y la añadimos 
-al producto. En el caso de añadir la oferta, se comprobaba ya si el enlace al 
-producto en la tienda ya existía, y solamente se actualiza el precio.
+Dentro del fichero \verb|message_processor.go| crearemos una interfaz llamada 
+\verb|MessageProcessor| que declarará solamente un método público que hará la 
+interpretación de datos: \verb|ParseMessage|. Este método recibirá el mensaje y 
+devolverá el nombre del videojuego, la plataforma, el precio y el enlace de compra.
 
-Es por esto que vamos a necesitar un nuevo método en el repositorio para devolver 
-el producto que coincide con el nombre y la plataforma que se le pasa como 
-parámetros. Para ello, añadimos el método \verb|FindByNameAndPlatform| a la clase 
-\verb|ProductRepository|. Por supuesto, se pueden encontrar las pruebas unitarias 
-relacionadas en el fichero \verb|memory_test.go|.
-
-Ya con el nuevo método, vamos a implementar el servicio de procesamiento de 
-mensajes. Tendremos un nuevo método llamado \verb|StoreProductOffer| que recibirá 
-el mensaje y lo procesará para finalmente almacenar la oferta en el repositorio.
-
-Dentro de este método hay un método privado que hará la interpretación de datos: 
-\verb|parseMessage|. Este método recibirá el mensaje y devolverá el nombre del 
-videojuego, la plataforma, el precio y el enlace de compra. Para ello, se han 
-utilizado tres expresiones regulares:
+Para ello, implementaremos el método dentro de una estructura que siga el contrato 
+de la interfaz. Esta estructura se llamará \verb|MessageProcessorService| que 
+implementará la interfaz mencionada. En el método utilizaremos tres expresiones 
+regulares para encontrar los campos:
 
 \begin{itemize}
-    \item \verb|gameRegex|: Esta expresión regular se encarga de obtener el nombre 
-    del videojuego y la plataforma. Para ello, se busca el texto que se encuentra 
-    entre el inicio del mensaje y el primer dato entre paréntesis.
-    \item \verb|priceRegex|: Esta expresión regular se encarga de obtener el precio 
-    del videojuego. Para ello, se busca el texto que se encuentra entre la palabra 
-    ``BAJONAZO'' y la primera aparición del símbolo de euro (€).
-    \item \verb|linkRegex|: Esta expresión regular se encarga de obtener el enlace 
-    de compra del videojuego. Para ello, se busca en todo el texto un elemento que 
-    concuerde con un formato URI.
+    \item \verb|gameRegex|: Esta expresión regular busca un patrón que comienza 
+    con un emoji de flecha hacia abajo, seguido de un conjunto de caracteres que no 
+    contienen '\#', luego '\#', y finalmente, una cadena de caracteres de palabra 
+    (letras, dígitos o guiones bajos) después de '\#'.
+    \item \verb|priceRegex|: Esta expresión regular busca la presencia de 
+    ``BAJONAZO'' o ``FLASH'' seguido de un precio expresado en euros.
+    \item \verb|linkRegex|: Esta expresión regular busca cualquier URL que comience 
+    con 'http://' o 'https://', seguido de cualquier secuencia de caracteres no 
+    espaciados.
 \end{itemize}
 
-Con los datos obtenidos, el método \verb|StoreProductOffer| se encarga de obtener 
-el producto mencionado en el mensaje y realizar las comprobaciones mencionadas 
-anteriormente para almacenar lo que sea necesario.
+Esta implementación se ha hecho y comprobado gracias a haber realizado las pruebas 
+unitarias desde el principio, utilizando un grupo de nueve casos de prueba para que 
+el método funcione como se espera.
+
+En cuanto a por qué hemos creado una interfaz para este servicio, es por el hecho 
+de que en el futuro nos ayudará para crear pruebas unitarias de manera más 
+sencilla, pero eso lo veremos en la siguiente sección.
