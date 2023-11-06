@@ -1,0 +1,54 @@
+name: API VidyaSale - Integración Continua
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/api/**"
+  pull_request:
+    paths:
+      - "src/api/**"
+
+env:
+
+  GO_VERSION: "1.21"
+
+jobs:
+
+  build:
+
+    name: Compilación de la API
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src/api
+
+    steps:
+
+    - name: Inicializar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Obtener Go para la compilación
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+
+    - name: Obtener las dependencias
+      run: go mod tidy
+
+    - name: Compilar la API
+      run: go build
+    
+    - name: Ejecutar las pruebas
+      run: go test -v ./...
+
+    - name: Publicar la API en el workflow
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: vidyasale-api
+        path: ${{ github.workspace }}/src/api
+        if-no-files-found: error

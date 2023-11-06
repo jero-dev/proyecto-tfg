@@ -1,0 +1,128 @@
+\chapter{Implementación}
+
+Ya teniendo todo planificado y sabiendo que metodologías vamos a seguir, 
+empezaremos con la implementación de la solución. Lo primero, por supuesto, es 
+haber creado nuestro \href{https://github.com/jero-dev/proyecto-tfg}
+{repositorio en GitHub} donde subir todos los progresos que hagamos no solamente en 
+el propio desarrollo de la solución, sino también en la redacción de la memoria del 
+trabajo.
+
+En cuanto a los otros elementos que hemos mencionado como las 
+\href{https://github.com/jero-dev/proyecto-tfg/issues}{issues}, los 
+\href{https://github.com/jero-dev/proyecto-tfg/milestones}{milestones} y 
+\href{https://github.com/users/jero-dev/projects/1}{nuestro tablero Kanban}, se 
+pueden encontrar en los enlaces que se encuentran en este párrafo.
+
+Con todo esto ya realizado, es momento de empezar a identificar las historias de 
+usuario que podemos encontrar gracias a la definición de personas que llegamos a 
+realizar en el capítulo de introducción.
+
+\section{Historias de usuario}
+
+Habiendo identificado los distintos usuarios que hemos encontrado, podemos 
+desarrollar las historias de usuario relacionadas o casos de uso que se pueden 
+desarrollar para este proyecto. Para ello, hemos definido las siguientes historias:
+
+\subsection{[HU01] Buscar videojuegos por nombre}
+
+Como persona menor de 20 años/coleccionista, quiero poder buscar un videojuego por 
+su nombre para obtener las distintas tiendas que lo venden y su precio, además de 
+su enlace de compra para cada una.
+
+\textbf{Condiciones de satisfacción}:
+
+\begin{itemize}
+    \item La solución debe de poder buscar un videojuego por su nombre.
+    \item La solución debe de poder obtener las distintas tiendas que venden el 
+    videojuego.
+    \item La solución debe de poder obtener el precio de cada tienda.
+    \item La solución debe de poder obtener el enlace de compra del videojuego para 
+    cada tienda.
+\end{itemize}
+
+\subsection{[HU02] Obtener avisos automáticos acerca de un videojuego}
+
+Como coleccionista, tendría en cuenta la opción de obtener avisos automáticos de la 
+disponibilidad de un videojuego en concreto en el que tengo interés.
+
+\textbf{Condiciones de satisfacción}:
+
+\begin{itemize}
+    \item La solución debe de ofrecer avisos automáticos de la disponibilidad de un 
+    videojuego.
+    \item En el aviso debe de aparecer el precio de cada tienda.
+    \item En el aviso debe de aparecer el enlace de compra del videojuego para 
+    cada tienda.
+\end{itemize}
+
+En nuestro caso nos centraremos principalmente en la primera historia de usuario, 
+completando la segunda en caso de que tengamos tiempo suficiente para ello.
+
+\section{Diseño de la aplicación}
+
+Teniendo ya las historias de usuario, vamos a empezar a diseñar la solución. Para 
+ello, seguiremos el diseño dirigido por dominios (en inglés, Domain Driven Design o 
+DDD) \cite{ddd} para identificar de manera correcta el dominio del problema y poder 
+así concentrarnos totalmente en él.
+
+\begin{itemize}
+    \item \textbf{Dominio del problema:} Tenemos como dominio del problema la 
+    gestión de ofertas y promociones de productos (aunque nos centremos en 
+    videojuegos). En cuanto a los conceptos (entidades) que hemos identificado, 
+    tenemos solamente uno: el de \textbf{videojuego}. Aparte, tenemos también un 
+    ``value object'' que sería el de \textbf{oferta} y un agregado de ambos que es 
+    el de \textbf{producto}.
+    \begin{itemize}
+        \item \textbf{Videojuego}: Las propiedades de esta entidad serían un 
+        \textbf{identificador único}, el \textbf{nombre} del producto y la 
+        \textbf{plataforma} en la que se juega.
+        \item \textbf{Oferta}: Las propiedades de este ``value object'' serían el 
+        \textbf{precio} y el \textbf{enlace} a la tienda donde se encuentra la 
+        oferta.
+        \item \textbf{Producto}: Las propiedades de este agregado serían un 
+        \textbf{videojuego} y una \textbf{lista de ofertas} que se han encontrado 
+        para este.
+    \end{itemize}
+    \item \textbf{Contexto delimitado:} Para centrarnos en el problema, tenemos que 
+    delimitar el contexto del mismo. Aquí tenemos claro que el contexto es la 
+    gestión de ofertas.
+    \item \textbf{Servicios de dominio:} Los servicios de dominio encapsulan la 
+    lógica de negocio que no pertenece a ninguna entidad o valor. Aquí podemos 
+    encontrar dos claros servicios de dominio: el procesamiento de los mensajes y 
+    la gestión de las ofertas.
+\end{itemize}
+
+Teniendo el análisis realizado, podemos plasmarlo directamente a la estructura de 
+nuestra aplicación. Primero, crearemos un directorio llamado \verb|entity| donde 
+guardaremos la entidad \verb|VideoGame| con las propiedades mencionadas. Después, 
+añadimos otro directorio llamado \verb|value_object| donde guardaremos el ``value 
+object'' de \verb|Offer| también con sus propiedades apropiadas.
+
+Este tipo de datos son básicos, sin ningún tipo de método fuera de un constructor y 
+dos métodos de acceso para las propiedades de \verb|Offer|. Por ello, no vamos a 
+tener pruebas unitarias para ellos.
+
+Siguiendo con los conceptos que hemos identificado, queda el agregado de 
+\verb|Product|. Este va a estar contenido en otro directorio llamado 
+\verb|aggregate| en el que encontraremos tanto el tipo \verb|Product| como también 
+las pruebas unitarias para el mismo en dos ficheros: \verb|product.go| y 
+\verb|product_test.go|.
+
+Necesitaremos guardar estos datos de alguna manera, así que añadiremos otro 
+directorio llamado \verb|domain| que contendrá otro llamado \verb|product|. Aquí 
+tendremos una interfaz que será la responsable de crear el contrato de cómo se debe 
+de comportar un repositorio (por ello llamaremos al fichero \verb|repository.go|) 
+para que no tengamos que depender de una tecnología en concreto. 
+
+Para tener nuestro producto mínimamente viable, generaremos primero un repositorio 
+en memoria que, si finalmente tenemos tiempo, podremos cambiar por uno que se 
+conecte a una base de datos de nuestra preferencia. Con ello, tendremos otro  
+directorio llamado \verb|memory| con dos ficheros: \verb|memory.go| y su respectivo 
+fichero de pruebas unitarias \verb|memory_test.go|.
+
+Finalmente, llegamos a los servicios de dominio. Añadimos un directorio llamado 
+\verb|service| que contendrá dos ficheros: \verb|offer_manager.go| y 
+\verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
+implementación de estos para la siguiente sección. También añadiremos el fichero 
+principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que al 
+final será esta aplicación: una API.
