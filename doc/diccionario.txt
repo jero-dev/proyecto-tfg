@@ -50,3 +50,12 @@ repository
 memory_test
 message_processor
 offer_manager
+FindByNameAndPlatform
+ProductRepository
+StoreProductOffer
+ParseMessage
+gameRegex
+priceRegex
+linkRegex
+MessageProcessor
+MessageProcessorService

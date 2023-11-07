@@ -10,14 +10,10 @@ import (
 )
 
 var (
-	// testProduct is the name of the product used for testing
-	testProduct = "Test Product"
-	// testPlatform is the name of the platform used for testing
-	testPlatform = "Test Platform"
-	// testLink is the link used for testing
-	testLink = "https://www.fake-shop.com"
-	// testNoMatchingLink is the link used for testing when there is no matching link
-	testNoMatchingLink = "https://www.fake-shop2.com"
+	// testVideoGameName is the name of the product used for testing
+	testVideoGameName = "Test Video Game Name"
+	// testVideoGamePlatform is the name of the platform used for testing
+	testVideoGamePlatform = "Test Video Game Platform"
 )
 
 func TestMemoryProductRepository_GetAll(t *testing.T) {
@@ -29,7 +25,7 @@ func TestMemoryProductRepository_GetAll(t *testing.T) {
 		expectedError error
 	}
 
-	existingProduct, _ := aggregates.NewProduct(testProduct, testPlatform)
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
 
 	testCases := []testCase{
 		{
@@ -68,7 +64,7 @@ func TestMemorySaleRepository_GetByID(t *testing.T) {
 		expectedError error
 	}
 
-	existingProduct, _ := aggregates.NewProduct(testProduct, testPlatform)
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
 
 	testCases := []testCase{
 		{
@@ -105,6 +101,71 @@ func TestMemorySaleRepository_GetByID(t *testing.T) {
 	}
 }
 
+func TestMemoryProductRepository_GetByNameAndPlatform(t *testing.T) {
+	repo := New()
+
+	type testCase struct {
+		name              string
+		products          []aggregates.Product
+		videoGameName     string
+		videoGamePlatform string
+		expectedError     error
+	}
+
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
+
+	testCases := []testCase{
+		{
+			name:              "No products in repository",
+			products:          []aggregates.Product{},
+			videoGameName:     testVideoGameName,
+			videoGamePlatform: testVideoGamePlatform,
+			expectedError:     product.ErrorProductNotFound,
+		},
+		{
+			name:              "Products in repository but no matching name and platform",
+			products:          []aggregates.Product{existingProduct},
+			videoGameName:     "Not Test Product",
+			videoGamePlatform: "Not Test Platform",
+			expectedError:     product.ErrorProductNotFound,
+		},
+		{
+			name:              "Products in repository but no matching name",
+			products:          []aggregates.Product{existingProduct},
+			videoGameName:     "Not Test Product",
+			videoGamePlatform: testVideoGamePlatform,
+			expectedError:     product.ErrorProductNotFound,
+		},
+		{
+			name:              "Products in repository but no matching platform",
+			products:          []aggregates.Product{existingProduct},
+			videoGameName:     testVideoGameName,
+			videoGamePlatform: "Not Test Platform",
+			expectedError:     product.ErrorProductNotFound,
+		},
+		{
+			name:              "Products in repository and matching name and platform",
+			products:          []aggregates.Product{existingProduct},
+			videoGameName:     testVideoGameName,
+			videoGamePlatform: testVideoGamePlatform,
+			expectedError:     nil,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			for _, product := range testCase.products {
+				repo.Add(product)
+			}
+
+			_, testError := repo.GetByNameAndPlatform(testCase.videoGameName, testCase.videoGamePlatform)
+			if testError != testCase.expectedError {
+				t.Errorf("Expected error to be %v but got %v", testCase.expectedError, testError)
+			}
+		})
+	}
+}
+
 func TestMemoryProductRepository_Add(t *testing.T) {
 	repo := New()
 
@@ -115,7 +176,7 @@ func TestMemoryProductRepository_Add(t *testing.T) {
 		expectedError error
 	}
 
-	existingProduct, _ := aggregates.NewProduct(testProduct, testPlatform)
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
 
 	testCases := []testCase{
 		{
@@ -156,7 +217,7 @@ func TestMemoryProductRepository_Update(t *testing.T) {
 		expectedError error
 	}
 
-	existingProduct, _ := aggregates.NewProduct(testProduct, testPlatform)
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
 
 	testCases := []testCase{
 		{

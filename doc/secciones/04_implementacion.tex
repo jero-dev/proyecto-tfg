@@ -121,8 +121,60 @@ directorio llamado \verb|memory| con dos ficheros: \verb|memory.go| y su respect
 fichero de pruebas unitarias \verb|memory_test.go|.
 
 Finalmente, llegamos a los servicios de dominio. Añadimos un directorio llamado 
-\verb|service| que contendrá dos ficheros: \verb|offer_manager.go| y 
-\verb|message_processor.go|. Al ser una lógica más compleja, dejaremos la 
-implementación de estos para la siguiente sección. También añadiremos el fichero 
-principal de esta aplicación que llamaremos \verb|api.go|, ya que es lo que al 
-final será esta aplicación: una API.
+\verb|service| que contendrá los distintos casos de uso o servicios. Uno se llamará 
+\verb|offer_manager.go| y otro será \verb|message_processor.go|. Al ser una lógica 
+más compleja, dejaremos la implementación de estos para la siguiente sección. 
+También añadiremos el fichero principal de esta aplicación que llamaremos 
+\verb|api.go|, ya que es lo que al final será esta aplicación: una API.
+
+\section{Procesamiento de mensajes}
+
+Como hemos mencionado, el servicio de procesamiento de mensajes tiene una lógica 
+más compleja, por el hecho de que tiene que encontrar el videojuego que se 
+encuentra en el mensaje junto con la oferta mencionada en el mismo. Primero de 
+todo, necesitamos ver cómo es el tipo de mensajes que se encuentran en los canales 
+de ofertas. En la figura \ref{fig:ejemplo de oferta} se puede ver uno de los 
+mensajes de los principales canales de ofertas:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figuras/ejemplo-ofertasjuegos.png}
+    \caption{Ejemplo de una notificación de oferta.}
+    \label{fig:ejemplo de oferta}
+\end{figure}
+
+La mayoría de mensajes que se encuentran en los canales de ofertas tienen el mismo 
+formato, así que podemos aprovechar esta característica para llegar a procesarlos 
+con una expresión regular.
+
+Dentro del fichero \verb|message_processor.go| crearemos una interfaz llamada 
+\verb|MessageProcessor| que declarará solamente un método público que hará la 
+interpretación de datos: \verb|ParseMessage|. Este método recibirá el mensaje y 
+devolverá el nombre del videojuego, la plataforma, el precio y el enlace de compra.
+
+Para ello, implementaremos el método dentro de una estructura que siga el contrato 
+de la interfaz. Esta estructura se llamará \verb|MessageProcessorService| que 
+implementará la interfaz mencionada. En el método utilizaremos tres expresiones 
+regulares para encontrar los campos:
+
+\begin{itemize}
+    \item \verb|gameRegex|: Esta expresión regular busca un patrón que comienza 
+    con un emoji de flecha hacia abajo, seguido de un conjunto de caracteres que no 
+    contienen '\#', luego '\#', y finalmente, una cadena de caracteres de palabra 
+    (letras, dígitos o guiones bajos) después de '\#'.
+    \item \verb|priceRegex|: Esta expresión regular busca la presencia de 
+    ``BAJONAZO'' o ``FLASH'' seguido de un precio expresado en euros.
+    \item \verb|linkRegex|: Esta expresión regular busca cualquier URL que comience 
+    con 'http://' o 'https://', seguido de cualquier secuencia de caracteres no 
+    espaciados.
+\end{itemize}
+
+Esta implementación se ha hecho y comprobado gracias a haber realizado las pruebas 
+unitarias desde el principio, utilizando un grupo de nueve casos de prueba para que 
+el método funcione como se espera. Estos nueve casos son mensajes reales que se han 
+encontrado en el canal de \href{https://ofertasjuegos.es/}{Ofertas Juegos}, uno de 
+los grupos de canales más populares de ofertas de videojuegos en Telegram.
+
+En cuanto a por qué hemos creado una interfaz para este servicio, es por el hecho 
+de que en el futuro nos ayudará para crear pruebas unitarias de manera más 
+sencilla, pero eso lo veremos en la siguiente sección.
