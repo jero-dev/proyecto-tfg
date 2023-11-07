@@ -1,10 +1,11 @@
-package memory
+package memory_test
 
 import (
 	"testing"
 
 	aggregates "vidya-sale/api/aggregate"
 	"vidya-sale/api/domain/product"
+	"vidya-sale/api/domain/product/memory"
 
 	"github.com/google/uuid"
 )
@@ -17,7 +18,7 @@ var (
 )
 
 func TestMemoryProductRepository_GetAll(t *testing.T) {
-	repo := New()
+	repo := memory.New()
 
 	type testCase struct {
 		name          string
@@ -55,7 +56,7 @@ func TestMemoryProductRepository_GetAll(t *testing.T) {
 }
 
 func TestMemorySaleRepository_GetByID(t *testing.T) {
-	repo := New()
+	repo := memory.New()
 
 	type testCase struct {
 		name          string
@@ -102,7 +103,7 @@ func TestMemorySaleRepository_GetByID(t *testing.T) {
 }
 
 func TestMemoryProductRepository_GetByNameAndPlatform(t *testing.T) {
-	repo := New()
+	repo := memory.New()
 
 	type testCase struct {
 		name              string
@@ -166,8 +167,74 @@ func TestMemoryProductRepository_GetByNameAndPlatform(t *testing.T) {
 	}
 }
 
+func TestMemoryProductRepository_GetByName(t *testing.T) {
+	repo := memory.New()
+
+	type testCase struct {
+		name             string
+		products         []aggregates.Product
+		videoGameName    string
+		expectedProducts []aggregates.Product
+		expectedError    error
+	}
+
+	existingProduct, _ := aggregates.NewProduct(testVideoGameName, testVideoGamePlatform)
+	existingProductInDifferentPlatform, _ := aggregates.NewProduct(testVideoGameName, "Not Test Platform")
+	existingProductWithDifferentName, _ := aggregates.NewProduct("Not Test Product", testVideoGamePlatform)
+
+	testCases := []testCase{
+		{
+			name:             "No products in repository",
+			products:         []aggregates.Product{},
+			videoGameName:    testVideoGameName,
+			expectedProducts: []aggregates.Product{},
+			expectedError:    product.ErrorProductNotFound,
+		},
+		{
+			name:             "Products in repository but no matching name",
+			products:         []aggregates.Product{existingProduct, existingProductInDifferentPlatform, existingProductWithDifferentName},
+			videoGameName:    "Test Product Name",
+			expectedProducts: []aggregates.Product{},
+			expectedError:    product.ErrorProductNotFound,
+		},
+		{
+			name:             "Products in repository and matching name",
+			products:         []aggregates.Product{existingProduct, existingProductInDifferentPlatform, existingProductWithDifferentName},
+			videoGameName:    testVideoGameName,
+			expectedProducts: []aggregates.Product{existingProduct, existingProductInDifferentPlatform},
+			expectedError:    nil,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			for _, product := range testCase.products {
+				repo.Add(product)
+			}
+
+			testProducts, testError := repo.GetByName(testCase.videoGameName)
+			if testError != testCase.expectedError {
+				t.Errorf("Expected error to be %v but got %v", testCase.expectedError, testError)
+			}
+			if len(testProducts) != len(testCase.expectedProducts) {
+				t.Errorf("Expected products to be %v but got %v", testCase.expectedProducts, testProducts)
+			}
+			for index, testProduct := range testProducts {
+				if testProduct.GetName() != testCase.expectedProducts[index].GetName() {
+					t.Errorf("Expected product name to be %v but got %v",
+						testCase.expectedProducts[index].GetName(), testProduct.GetName())
+				}
+				if testProduct.GetPlatform() != testCase.expectedProducts[index].GetPlatform() {
+					t.Errorf("Expected product platform to be %v but got %v",
+						testCase.expectedProducts[index].GetPlatform(), testProduct.GetPlatform())
+				}
+			}
+		})
+	}
+}
+
 func TestMemoryProductRepository_Add(t *testing.T) {
-	repo := New()
+	repo := memory.New()
 
 	type testCase struct {
 		name          string
@@ -208,7 +275,7 @@ func TestMemoryProductRepository_Add(t *testing.T) {
 }
 
 func TestMemoryProductRepository_Update(t *testing.T) {
-	repo := New()
+	repo := memory.New()
 
 	type testCase struct {
 		name          string

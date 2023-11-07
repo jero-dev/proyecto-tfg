@@ -37,7 +37,7 @@ func (mr *MemoryRepository) GetAll() ([]aggregates.Product, error) {
 	return products, nil
 }
 
-// Get finds a product by its ID
+// GetByID finds a product by its ID
 func (mr *MemoryRepository) GetByID(id uuid.UUID) (aggregates.Product, error) {
 	for _, product := range mr.products {
 		if product.GetID() == id {
@@ -46,6 +46,23 @@ func (mr *MemoryRepository) GetByID(id uuid.UUID) (aggregates.Product, error) {
 	}
 
 	return aggregates.Product{}, product.ErrorProductNotFound
+}
+
+// GetByName finds all products by their name
+func (mr *MemoryRepository) GetByName(name string) ([]aggregates.Product, error) {
+	products := []aggregates.Product{}
+
+	for _, product := range mr.products {
+		if product.GetName() == name {
+			products = append(products, product)
+		}
+	}
+
+	if length := len(products); length == 0 {
+		return []aggregates.Product{}, product.ErrorProductNotFound
+	}
+
+	return products, nil
 }
 
 // GetByNameAndPlatform finds a product by its name and platform
