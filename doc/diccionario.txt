@@ -59,3 +59,8 @@ priceRegex
 linkRegex
 MessageProcessor
 MessageProcessorService
+OfferManager
+StoreOffer
+GetGameOffers
+AddOffer
+FindByName

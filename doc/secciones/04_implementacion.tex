@@ -177,4 +177,41 @@ los grupos de canales más populares de ofertas de videojuegos en Telegram.
 
 En cuanto a por qué hemos creado una interfaz para este servicio, es por el hecho 
 de que en el futuro nos ayudará para crear pruebas unitarias de manera más 
-sencilla, pero eso lo veremos en la siguiente sección.
+sencilla, pero eso lo veremos en una de las próximas secciones.
+
+\section{Gestión de ofertas}
+
+Ya con la lógica de procesamiento de mensajes implementada, pasamos al otro 
+servicio de dominio, que es el de gestión de ofertas. Este servicio se encargará de 
+tanto añadir una oferta como de obtener las ofertas de un título en concreto en 
+todas las plataformas.
+
+Este servicio tendrá dos métodos: \verb|StoreOffer| y \verb|GetGameOffers|. El 
+primero añadirá una oferta a un producto, mientras que el segundo devolverá las 
+ofertas de un videojuego en todas las plataformas en la que esté disponible.
+
+A la hora de implementar la lógica de \verb|StoreOffer|, debemos de comprobar si el 
+producto existe en el repositorio. Si este no existe, se genera y añadiremos la 
+oferta que se menciona. Si existe, obtenemos la oferta y la añadimos al producto. 
+En el caso de añadir la oferta, se verificaba de por sí si el enlace al producto en 
+la tienda en el método \verb|AddOffer| del agregado de producto, y solamente se 
+actualiza el precio.
+
+Es por esto que vamos a necesitar un nuevo método en el repositorio para devolver 
+el producto que coincide con el nombre y la plataforma que se le pasa como 
+parámetros. Para ello, añadimos el método \verb|FindByNameAndPlatform| a la clase 
+\verb|ProductRepository|. Por supuesto, se pueden encontrar las pruebas unitarias 
+relacionadas en el fichero \verb|memory_test.go|.
+
+Ya con el nuevo método, vamos a implementar el servicio de almacenamiento de 
+ofertas. Tendremos un nuevo método llamado \verb|StoreOffer| que recibirá el nombre 
+del videojuego, la plataforma de este, el precio de la oferta y el enlace donde 
+encontrarla.
+
+Teniendo el almacenamiento de las ofertas, vamos a implementar la devolución de las 
+ofertas de un videojuego en todas sus plataformas. Pero, todavía no tenemos otro 
+método necesario en la capa de repositorio: necesitamos encontrar las ofertas por 
+solamente el nombre del videojuego. Este método se llamará \verb|FindByName|.
+
+Con esto ya hecho, podemos implementar el método \verb|GetGameOffers| que recibirá 
+el nombre del videojuego y devolverá las ofertas de este en todas sus plataformas.
