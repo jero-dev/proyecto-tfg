@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/url"
 	services "vidya-sale/api/service"
 
 	"github.com/gofiber/fiber/v2"
@@ -32,7 +33,7 @@ func main() {
 }
 
 func getGameOffers(context *fiber.Ctx, offerManager *services.OfferManagerService) error {
-	gameName := context.Params("gameName")
+	gameName, _ := url.QueryUnescape(context.Params("gameName"))
 
 	gameOffers, getGameOffersError := offerManager.GetGameOffers(gameName)
 
@@ -67,7 +68,7 @@ func storeOffer(context *fiber.Ctx, offerManager *services.OfferManagerService,
 	storingError := offerManager.StoreOffer(gameName, platform, link, price)
 
 	if storingError != nil {
-		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return context.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
 			"success": false,
 			"message": "Could not find the elements correctly.",
 			"data": fiber.Map{
