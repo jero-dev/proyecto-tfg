@@ -15,6 +15,13 @@ type MessageProcessor interface {
 
 type MessageProcessorService struct{}
 
+// NewMessageProcessorService returns a new MessageProcessorService
+func NewMessageProcessorService() *MessageProcessorService {
+	processorService := &MessageProcessorService{}
+
+	return processorService
+}
+
 // ParseMessage takes an offer message and returns the name, platform, link and price of the offer
 func (messageProcessor *MessageProcessorService) ParseMessage(message string) (string, string, string, float64) {
 	var name, platform, link string
