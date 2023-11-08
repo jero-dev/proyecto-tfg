@@ -44,10 +44,25 @@ func getGameOffers(context *fiber.Ctx, offerManager *services.OfferManagerServic
 		})
 	}
 
+	offersResponse := []PlatformResponse{}
+	for platform, offers := range gameOffers {
+		platformOffers := []OfferResponse{}
+		for _, offer := range offers {
+			platformOffers = append(platformOffers, OfferResponse{
+				Link:  offer.GetLink(),
+				Price: offer.GetPrice(),
+			})
+		}
+		offersResponse = append(offersResponse, PlatformResponse{
+			Platform: platform,
+			Offers:   platformOffers,
+		})
+	}
+
 	return context.Status(fiber.StatusOK).JSON(fiber.Map{
 		"success": true,
 		"message": "Game offers successfully retrieved.",
-		"data":    gameOffers,
+		"data":    offersResponse,
 	})
 }
 
@@ -89,4 +104,14 @@ func storeOffer(context *fiber.Ctx, offerManager *services.OfferManagerService,
 
 type MessageRequest struct {
 	Message string `json:"message"`
+}
+
+type PlatformResponse struct {
+	Platform string          `json:"platform"`
+	Offers   []OfferResponse `json:"offers"`
+}
+
+type OfferResponse struct {
+	Link  string  `json:"link"`
+	Price float64 `json:"price"`
 }
