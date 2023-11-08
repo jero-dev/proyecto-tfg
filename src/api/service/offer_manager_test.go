@@ -1,10 +1,8 @@
-package services_test
+package services
 
 import (
 	"testing"
 	aggregates "vidya-sale/api/aggregate"
-	"vidya-sale/api/domain/product/memory"
-	services "vidya-sale/api/service"
 	valueobjects "vidya-sale/api/valueobject"
 )
 
@@ -92,13 +90,13 @@ func TestOfferManagerService_StoreOffer(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			productsRepository := memory.New()
+			managerService, _ := NewOfferManagerService(WithMemoryProductRepository())
 			for _, existingProduct := range testCase.existingProducts {
-				productsRepository.Add(existingProduct)
+				managerService.products.Add(existingProduct)
 			}
-			processorService, _ := services.NewOfferManagerService(services.WithProductRepository(productsRepository))
-			testError := processorService.StoreOffer(testCase.gameName, testCase.gamePlatform, testCase.offerLink, testCase.offerPrice)
-			actualProducts, _ := productsRepository.GetAll()
+
+			testError := managerService.StoreOffer(testCase.gameName, testCase.gamePlatform, testCase.offerLink, testCase.offerPrice)
+			actualProducts, _ := managerService.products.GetAll()
 
 			if testError != testCase.expectedError {
 				t.Errorf("Expected error to be %v but got %v", testCase.expectedError, testError)
@@ -156,7 +154,7 @@ func TestOfferManagerService_GetGameOffers(t *testing.T) {
 			gameName:         "Test Game Name",
 			existingProducts: []aggregates.Product{},
 			expectedData:     make(map[string][]valueobjects.Offer),
-			expectedError:    services.ErrorThereAreNoOffers,
+			expectedError:    ErrorThereAreNoOffers,
 		},
 		{
 			name:     "No offers for the given game name",
@@ -165,7 +163,7 @@ func TestOfferManagerService_GetGameOffers(t *testing.T) {
 				existingProductWithOffer, existingProductInAnotherPlatform, existingProductWithTwoOffers,
 			},
 			expectedData:  make(map[string][]valueobjects.Offer),
-			expectedError: services.ErrorThereAreNoOffers,
+			expectedError: ErrorThereAreNoOffers,
 		},
 		{
 			name:     "Existing offers for the given game name",
@@ -180,11 +178,11 @@ func TestOfferManagerService_GetGameOffers(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			productsRepository := memory.New()
+			managerService, _ := NewOfferManagerService(WithMemoryProductRepository())
 			for _, existingProduct := range testCase.existingProducts {
-				productsRepository.Add(existingProduct)
+				managerService.products.Add(existingProduct)
 			}
-			managerService, _ := services.NewOfferManagerService(services.WithProductRepository(productsRepository))
+
 			gameOffers, testError := managerService.GetGameOffers(testCase.gameName)
 
 			if testError != testCase.expectedError {

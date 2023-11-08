@@ -1,11 +1,10 @@
-package memory_test
+package memory
 
 import (
 	"testing"
 
 	aggregates "vidya-sale/api/aggregate"
 	"vidya-sale/api/domain/product"
-	"vidya-sale/api/domain/product/memory"
 
 	"github.com/google/uuid"
 )
@@ -18,7 +17,7 @@ var (
 )
 
 func TestMemoryProductRepository_GetAll(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name          string
@@ -56,7 +55,7 @@ func TestMemoryProductRepository_GetAll(t *testing.T) {
 }
 
 func TestMemorySaleRepository_GetByID(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name          string
@@ -103,7 +102,7 @@ func TestMemorySaleRepository_GetByID(t *testing.T) {
 }
 
 func TestMemoryProductRepository_GetByNameAndPlatform(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name              string
@@ -168,7 +167,7 @@ func TestMemoryProductRepository_GetByNameAndPlatform(t *testing.T) {
 }
 
 func TestMemoryProductRepository_GetByName(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name             string
@@ -234,7 +233,7 @@ func TestMemoryProductRepository_GetByName(t *testing.T) {
 }
 
 func TestMemoryProductRepository_Add(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name          string
@@ -275,7 +274,7 @@ func TestMemoryProductRepository_Add(t *testing.T) {
 }
 
 func TestMemoryProductRepository_Update(t *testing.T) {
-	repo := memory.New()
+	repo := New()
 
 	type testCase struct {
 		name          string
