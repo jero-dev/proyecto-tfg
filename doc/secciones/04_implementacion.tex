@@ -232,6 +232,14 @@ mensajería? Lo que haremos será crear otra API por cada bot para servicio de
 mensajería que queramos utilizar. En la figura \ref{fig:infraestructura} se puede 
 ver un diagrama de la infraestructura.
 
+El por qué de esta infraestructura es por el hecho de que, si en el futuro se 
+quieren añadir más servicios de mensajería, solamente se tendría que añadir un
+nuevo bot que se encargue de recibir los mensajes y enviarlos a la API principal.
+Además, nos permite tener una mayor fiabilidad en el caso de que alguno de los bots 
+deje de funcionar por algún problema, ya sea por la plataforma de despliegue o por 
+algún problema con el servicio de mensajería, haciendo que la API no dependa de 
+ello.
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{figuras/infraestructura-solucion.png}
