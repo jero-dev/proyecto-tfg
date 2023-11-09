@@ -64,3 +64,5 @@ StoreOffer
 GetGameOffers
 AddOffer
 FindByName
+api_test
+Platform

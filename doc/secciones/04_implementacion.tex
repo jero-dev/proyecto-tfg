@@ -215,3 +215,36 @@ solamente el nombre del videojuego. Este método se llamará \verb|FindByName|.
 
 Con esto ya hecho, podemos implementar el método \verb|GetGameOffers| que recibirá 
 el nombre del videojuego y devolverá las ofertas de este en todas sus plataformas.
+
+Ya teniendo la lógica de negocio implementada, podemos pasar a la parte de la 
+infraestructura de la solución.
+
+\section{Infraestructura}
+
+Como hemos mencionado anteriormente, queremos que la solución sea una API. Sin 
+embargo, esta no va a encargarse de todo (recibir los mensajes desde Telegram y 
+demás servicios de mensajería, además de la lógica de negocio), sino que va a tener 
+única y exclusivamente dos entradas: una para recibir una cadena de texto que sería 
+el mensaje de una oferta y otra para devolver las ofertas de un videojuego dado.
+
+Y entonces, ¿cómo vamos a gestionar la recepción de los distintos servicios de 
+mensajería? Lo que haremos será crear otra API por cada bot para servicio de 
+mensajería que queramos utilizar. En la figura \ref{fig:infraestructura} se puede 
+ver un diagrama de la infraestructura.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figuras/infraestructura-solucion.png}
+    \caption{Infraestructura de la solución.}
+    \label{fig:infraestructura}
+\end{figure}
+
+Las dos entradas junto con la función principal con la configuración de la API se 
+encuentran en el fichero \verb|api.go|. Además, se ha añadido otro fichero llamado 
+\verb|api_test.go| para las pruebas de integración de la API.
+
+Para el despliegue, hemos revisado varios servicios de hosting de aplicaciones. Se 
+han valorado los más comunes como Heroku, AWS, Azure y Google Cloud Platform, pero 
+finalmente nos hemos decidido por usar \href{https://www.fl0.com}{FL0} para 
+este caso, ya que tiene integrado un servicio de despliegue continuo directamente 
+con GitHub y es de uso gratuito para proyectos de pequeña escala.
