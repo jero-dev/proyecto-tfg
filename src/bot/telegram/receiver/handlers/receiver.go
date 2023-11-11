@@ -29,7 +29,7 @@ func HandleUpdates(context *fiber.Ctx) error {
 	if update.ChannelPost != nil {
 		log.Printf("[Channel - %s] %s", update.ChannelPost.SenderChat.Title, update.ChannelPost.Text)
 		message := update.ChannelPost.Text
-		apiURL := os.Getenv("API_URL")
+		apiURL := os.Getenv("API_URL") + "/offers"
 
 		_, responseError := http.Post(apiURL, "application/json", bytes.NewBuffer([]byte(message)))
 
