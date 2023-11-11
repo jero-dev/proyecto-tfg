@@ -1,0 +1,54 @@
+name: Telegram Bot Receiver VidyaSale - Integración Continua
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/bot/telegram/receiver/**"
+  pull_request:
+    paths:
+      - "src/bot/telegram/receiver/**"
+
+env:
+
+  GO_VERSION: "1.20"
+
+jobs:
+
+  build:
+
+    name: Compilación del bot
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src/bot/telegram/receiver/
+
+    steps:
+
+    - name: Inicializar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Obtener Go para la compilación
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+
+    - name: Obtener las dependencias
+      run: go mod tidy
+
+    - name: Compilar el bot
+      run: go build
+    
+    - name: Ejecutar las pruebas
+      run: go test -v ./...
+
+    - name: Publicar bot en el workflow
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: vidyasale-api
+        path: ${{ github.workspace }}/src/bot/telegram/receiver
+        if-no-files-found: error
