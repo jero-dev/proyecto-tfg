@@ -16,7 +16,7 @@ var (
 	MessageOK                        = "Process finished correctly"
 )
 
-func HandleUpdates(context *fiber.Ctx) error {
+func CollectUpdate(context *fiber.Ctx) error {
 	update := &telegram.Update{}
 
 	if parseError := context.BodyParser(update); parseError != nil {

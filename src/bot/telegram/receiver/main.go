@@ -13,7 +13,7 @@ func main() {
 	app := fiber.New()
 	listenPort := os.Getenv("PORT")
 
-	app.Post("/receiver", handlers.HandleUpdates)
+	app.Post("/collect", handlers.CollectUpdate)
 
 	app.Listen(listenPort)
 	setUpWebHook()
@@ -26,7 +26,7 @@ func setUpWebHook() {
 		log.Fatal(errorBot)
 	}
 
-	webHook, urlError := telegram.NewWebhook(os.Getenv("HOST_URL") + "/receiver")
+	webHook, urlError := telegram.NewWebhook(os.Getenv("HOST_URL") + "/collector")
 
 	if urlError != nil {
 		log.Fatal(urlError)

@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_HandleUpdate(t *testing.T) {
+func Test_CollectUpdate(t *testing.T) {
 	app := fiber.New()
 
-	app.Post("/receiver", HandleUpdates)
+	app.Post("/collect", CollectUpdate)
 
 	testCases := []struct {
 		name         string
@@ -22,19 +22,19 @@ func Test_HandleUpdate(t *testing.T) {
 	}{
 		{
 			name:         "Get HTTP status 200 when process finished correctly",
-			route:        "/receiver",
+			route:        "/collect",
 			body:         `{"update_id": 1, "message": {"text": "Text Message"}}`,
 			expectedCode: fiber.StatusOK,
 		},
 		{
 			name:         "Get HTTP status 500 when message could not be sent to the API",
-			route:        "/receiver",
+			route:        "/collect",
 			body:         `{"update_id": 2, "channel_post": {"text": "Text Message", "sender_chat": {"title": "Test Channel"}}}`,
 			expectedCode: fiber.StatusInternalServerError,
 		},
 		{
 			name:         "Get HTTP status 400 when message is unparsable",
-			route:        "/receiver",
+			route:        "/collect",
 			body:         `{"invalid": }`,
 			expectedCode: fiber.StatusBadRequest,
 		},
