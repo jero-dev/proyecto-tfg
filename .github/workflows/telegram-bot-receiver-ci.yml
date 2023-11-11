@@ -1,14 +1,14 @@
-name: Telegram Bot Receiver VidyaSale - Integración Continua
+name: Telegram Bot Collector VidyaSale - Integración Continua
 
 on:
   push:
     branches:
       - main
     paths:
-      - "src/bot/telegram/receiver/**"
+      - "src/bot/telegram/collector/**"
   pull_request:
     paths:
-      - "src/bot/telegram/receiver/**"
+      - "src/bot/telegram/collector/**"
 
 env:
 
@@ -24,7 +24,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./src/bot/telegram/receiver/
+        working-directory: ./src/bot/telegram/collector/
 
     steps:
 
@@ -50,5 +50,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: vidyasale-api
-        path: ${{ github.workspace }}/src/bot/telegram/receiver
+        path: ${{ github.workspace }}/src/bot/telegram/collector
         if-no-files-found: error
