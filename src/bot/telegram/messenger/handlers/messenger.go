@@ -104,7 +104,7 @@ func composeMessage(statusCode int, body io.ReadCloser, chatID int64) telegram.M
 		for _, platform := range gameOffers.Platforms {
 			answer += platform.Platform + ":\n"
 			for _, offer := range platform.Offers {
-				answer += "\t" + offer.Price + " - " + offer.Link + "\n"
+				answer += offer.Link + " - " + offer.Price + "€\n"
 			}
 		}
 
