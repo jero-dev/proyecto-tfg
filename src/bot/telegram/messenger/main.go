@@ -16,7 +16,7 @@ func main() {
 
 	log.Print("[Bot] Bot is up and running")
 
-	app.Put("/fetch-offers", func(context *fiber.Ctx) error {
+	app.Post("/fetch-offers", func(context *fiber.Ctx) error {
 		return handlers.GetGameOffers(context, bot)
 	})
 

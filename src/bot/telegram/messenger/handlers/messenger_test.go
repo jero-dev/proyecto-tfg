@@ -12,7 +12,7 @@ import (
 func Test_GetGameOffers(t *testing.T) {
 	app := fiber.New()
 
-	app.Put("/fetch-offers", func(context *fiber.Ctx) error {
+	app.Post("/fetch-offers", func(context *fiber.Ctx) error {
 		return GetGameOffers(context, nil)
 	})
 
@@ -49,7 +49,7 @@ func Test_GetGameOffers(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		request := httptest.NewRequest("PUT", testCase.route, bytes.NewBufferString(testCase.body))
+		request := httptest.NewRequest("POST", testCase.route, bytes.NewBufferString(testCase.body))
 		request.Header.Set("Content-Type", "application/json")
 
 		response, _ := app.Test(request, -1)
