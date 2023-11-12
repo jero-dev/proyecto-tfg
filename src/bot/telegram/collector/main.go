@@ -11,7 +11,7 @@ import (
 
 func main() {
 	app := fiber.New()
-	listenPort := os.Getenv("PORT")
+	listenPort := ":" + os.Getenv("PORT")
 
 	app.Post("/collect", handlers.CollectUpdate)
 
