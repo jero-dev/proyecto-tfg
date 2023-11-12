@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 
 	telegram "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/gofiber/fiber/v2"
@@ -29,8 +30,8 @@ type PlatformResponse struct {
 }
 
 type OfferResponse struct {
-	Link  string `json:"link"`
-	Price string `json:"price"`
+	Link  string  `json:"link"`
+	Price float64 `json:"price"`
 }
 
 func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
@@ -104,7 +105,8 @@ func composeMessage(statusCode int, body io.ReadCloser, chatID int64) telegram.M
 		for _, platform := range gameOffers.Platforms {
 			answer += platform.Platform + ":\n"
 			for _, offer := range platform.Offers {
-				answer += offer.Link + " - " + offer.Price + "€\n"
+				price := strconv.FormatFloat(offer.Price, 'f', -1, 64)
+				answer += offer.Link + " - " + price + "€\n"
 			}
 		}
 
