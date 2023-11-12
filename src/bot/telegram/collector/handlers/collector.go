@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -20,7 +21,6 @@ func CollectUpdate(context *fiber.Ctx) error {
 	update := &telegram.Update{}
 
 	if parseError := context.BodyParser(update); parseError != nil {
-		log.Fatal(parseError)
 		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"success": false,
 			"message": MessageNotAbleToParseRequestBody,
@@ -29,16 +29,27 @@ func CollectUpdate(context *fiber.Ctx) error {
 
 	if update.ChannelPost != nil {
 		log.Printf("[Channel - %s] %s", update.ChannelPost.SenderChat.Title, update.ChannelPost.Text)
-		message := update.ChannelPost.Text
+		message := struct {
+			Message string `json:"message"`
+		}{
+			Message: update.ChannelPost.Text,
+		}
+		body, _ := json.Marshal(message)
 		apiURL := os.Getenv("API_URL") + "/offers"
 
-		_, responseError := http.Post(apiURL, "application/json", bytes.NewBuffer([]byte(message)))
+		response, responseError := http.Post(apiURL, "application/json", bytes.NewBuffer(body))
 
 		if responseError != nil {
-			log.Fatal(responseError)
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": MessageCouldNotSendToAPI,
+			})
+		}
+
+		if response.StatusCode != http.StatusOK {
+			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"success": false,
+				"message": "The API returned a " + response.Status + " status code.",
 			})
 		}
 	}

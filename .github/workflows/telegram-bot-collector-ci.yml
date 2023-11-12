@@ -29,26 +29,15 @@ jobs:
     steps:
 
     - name: Inicializar el repositorio
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Obtener Go para la compilación
       uses: actions/setup-go@v4
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    - name: Obtener las dependencias
-      run: go mod tidy
-
     - name: Compilar el bot
       run: go build
     
     - name: Ejecutar las pruebas
       run: go test -v ./...
-
-    - name: Publicar bot en el workflow
-      if: ${{ github.event_name != 'pull_request' }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: vidyasale-api
-        path: ${{ github.workspace }}/src/bot/telegram/collector
-        if-no-files-found: error
