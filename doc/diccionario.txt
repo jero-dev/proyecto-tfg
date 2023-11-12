@@ -66,3 +66,10 @@ AddOffer
 FindByName
 api_test
 Platform
+VidyaSale
+Collector
+src
+telegram
+collector
+GetUpdates
+Webhook
