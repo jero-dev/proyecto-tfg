@@ -1,0 +1,73 @@
+\chapter{Conclusiones y trabajos futuros}
+
+Aún teniendo ya una solución funcional y que cubre las necesidades de los usuarios, 
+hemos comentado también que existen otras opciones que finalmente no hemos 
+implementado por falta de tiempo, ya sea para desarrollar, investigar o probar.
+
+Es por eso que se puede extraer de varias secciones de implementación algunas 
+mejoras que se podrían realizar en el futuro, además de nuevas funcionalidades en 
+la solución, ya que también tenemos otra historia de usuario identificada que no 
+hemos llegado a implementar por no ser la más prioritaria.
+
+\section{Conclusiones}
+
+En conclusión, hemos conseguido desarrollar una solución que cubre las 
+necesidades de los usuarios, que es la obtención de ofertas de manera rápida. Por 
+supuesto, hemos identificado mejoras, pero al haber llevado a cabo un diseño de la 
+aplicación con DDD, algunas de ellas se podrían efectuar de manera más sencilla que 
+si no lo hubiéramos hecho.
+
+El principal reto de este trabajo ha sido sobre todo el procesamiento de los 
+mensajes, ya que estos, aunque siguen un patrón finalmente, están escritos en 
+lenguaje natural, por lo que posiblemente en cuanto añadamos más canales de 
+información, las expresiones regulares que se utilicen varíen.
+
+Aunque no fueran el objetivo principal de este trabajo, también hemos aprendido 
+como los bots o apps de servicios de mensajería pueden ser una herramienta muy 
+potente no solo para la comunicación, sino también para la automatización o 
+integración de servicios.
+
+\section{Trabajos futuros}
+
+Aquí podemos dividir las posibles mejoras en dos grupos: las que afectan a la 
+integración de la solución y las que afectan a las funcionalidades de la misma.
+
+\subsection{Integración de la solución}
+\begin{itemize}
+    \item \textbf{Uso de una base de datos}: Como llegamos a comentar en la sección 
+    del diseño de la aplicación en el capítulo 4, ahora mismo estamos guardando y 
+    accediendo a los datos almacenados en memoria. Esto para el inicio no supone un 
+    problema para la funcionalidad, pero si se quiere que la aplicación sea 
+    persistente, la base de datos es nuestra solución. Al haber diseñado la 
+    aplicación con DDD, esto nos permite cambiar la implementación de manera 
+    sencilla sin ser un gran cambio en el código.
+    \item \textbf{Uso de contenedores propios}: Al momento en el que hacemos el 
+    despliegue de tanto los bots como la API, estamos usando contenedores que 
+    vienen incluidos con el servicio de este. Esto nos permite desplegar de manera 
+    rápida, aunque no tenemos un control total sobre el contenedor. Por eso, una 
+    mejora sería crear nuestros propios contenedores con las especificaciones que 
+    necesitemos.
+    \item \textbf{Portal web o aplicación móvil}: También hemos comentado que por 
+    obtener una solución funcional lo antes posible, hemos sacado un bot con el que 
+    el usuario final puede interactuar. Aun así, no es la mejor solución en cuanto 
+    a experiencia de usuario, ya que estamos más acostumbrados a utilizar o 
+    portales web o aplicaciones móviles. Por eso, una mejora sería primero elegir 
+    una de las dos opciones y desarrollarla.
+\end{itemize}
+
+\subsection{Funcionalidades de la solución}
+\begin{itemize}
+    \item \textbf{Más canales de comunicación}: Aunque, como mencionamos al 
+    principio de este documento, nos hemos centrado sobre todo en los canales de 
+    Telegram, aún queda por integrar la funcionalidad de Discord. No solamente eso, 
+    sino que también se podría explorar la posibilidad de integrar la misma con 
+    los nuevos canales de WhatsApp.
+    \item \textbf{Avisos de disponibilidad}: Teniendo ya la funcionalidad 
+    principal, que es la obtención de ofertas por parte de los usuarios, se podría 
+    obtener avisos para cuando un título que el usuario está buscando se encuentre 
+    disponible, que justamente cumpliría con la otra historia de usuario que hemos 
+    identificado. Esta funcionalidad también podría ser una mejora de pago para los 
+    usuarios, ya que los principales interesados serían los usuarios de perfil 
+    coleccionista que, como comentamos en la sección de identificación de estos, 
+    cuentan con un mayor presupuesto.
+\end{itemize}
