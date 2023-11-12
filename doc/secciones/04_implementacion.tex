@@ -256,3 +256,43 @@ han valorado los más comunes como Heroku, AWS, Azure y Google Cloud Platform, p
 finalmente nos hemos decidido por usar \href{https://www.fl0.com}{FL0} para 
 este caso, ya que tiene integrado un servicio de despliegue continuo directamente 
 con GitHub y es de uso gratuito para proyectos de pequeña escala.
+
+\section{Obtención de mensajes de canales de Telegram}
+
+Teniendo nuestra aplicación principal terminada, necesitamos ahora obtener los 
+mensajes directamente de los canales de Telegram. Para esto, vamos a crear un bot 
+de Telegram que llamaremos \verb|VidyaSale Collector| que se encargará de recibir 
+y procesar los mensajes de los canales de ofertas en donde esté. Se puede encontrar 
+el código fuente de este en el directorio \verb|src/bot/telegram/collector|. Este 
+bot utilizará la librería 
+\href{https://github.com/go-telegram-bot-api/telegram-bot-api}{Telegram Bot API} 
+para las conexiones con la API de Telegram. Con esto, el desarrollo del bot es 
+mucho más ligero que si lo tuviéramos que hacer por nuestra cuenta.
+
+Para el manejo de actualizaciones (mensajes nuevos, ediciones de mensajes, etc.), 
+se pueden emplear dos métodos: \verb|GetUpdates| y \verb|Webhook|. El primero 
+llama constantemente a la API de Telegram preguntando si hay alguna actualización, 
+haciendo que el número de llamadas sea muy alto y haciendo que posiblemente el 
+costo en el despliegue a producción aumente.
+
+Es por eso que nos hemos decantado por usar el método \verb|Webhook|, que contacta 
+con la API de Telegram informando de que, si el bot recibe alguna actualización, se 
+le envíe a una URL en concreto. En la figura \ref{fig:metodos_actualizacion} se 
+puede ver una simplificación de cómo funcionan ambos métodos.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{figuras/metodos-actualizacion.png}
+    \caption{Métodos de recepción de actualizaciones de Telegram.}
+    \label{fig:metodos_actualizacion}
+\end{figure}
+
+Al haber elegido el segundo método, necesitamos que el bot esté desplegado en un 
+servidor que tenga una URL pública, ya que si no, no se podría conectar con este. 
+Para ello, utilizaremos la misma plataforma para el despliegue que hemos utilizado 
+para la API principal.
+
+Para terminar, lo que hará el bot será comprobar que tipo de mensaje es el que se 
+ha recibido (si viene de un canal o de un grupo, si es un mensaje nuevo o una 
+edición de un mensaje, etc.) y, si es un mensaje nuevo de un canal, se procesará 
+para enviarlo a la API principal para que lo procese y almacene la oferta.
