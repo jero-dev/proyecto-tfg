@@ -296,3 +296,31 @@ Para terminar, lo que hará el bot será comprobar que tipo de mensaje es el que
 ha recibido (si viene de un canal o de un grupo, si es un mensaje nuevo o una 
 edición de un mensaje, etc.) y, si es un mensaje nuevo de un canal, se procesará 
 para enviarlo a la API principal para que lo procese y almacene la oferta.
+
+\section{Interacción del usuario con la solución}
+
+Con los servicios ya recolectando los mensajes de los canales y almacenando la 
+información obtenida después de procesarlos, necesitamos que el usuario pueda 
+usarlo de una manera sencilla.
+
+Hay varias opciones para esto, pero por ahora hemos decidido crear otro bot con el 
+que el usuario se pueda comunicar y que este le devuelva la información relacionada 
+con lo que el usuario le pida. Esto es por tener cuanto antes una opción que pueda 
+ser utilizado por los usuarios finales y también por ser un desarrollo muy parecido 
+al del bot que se encarga de recolectar los mensajes de los canales.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{figuras/respuesta-bot.png}
+    \caption{Respuesta al preguntar por un título.}
+    \label{fig:respuesta_bot}
+\end{figure}
+
+Lo que debe de hacer el usuario es enviar un mensaje al bot con el nombre del 
+videojuego en el que esté interesado y el bot le devolverá un mensaje con las 
+ofertas de este en las plataformas que encuentre. En la figura 
+\ref{fig:respuesta_bot} se puede ver un ejemplo de la respuesta del bot cuando se 
+le pregunta por un título.
+
+Con esto, ya tenemos la solución que puede ser usada perfectamente por los usuarios 
+ya identificados al inicio de este documento.
