@@ -25,13 +25,13 @@ func Test_GetGameOffers(t *testing.T) {
 		{
 			name:         "Get HTTP status 200 when process finished correctly",
 			route:        "/fetch-offers",
-			body:         `{"update_id": 1, "message": {"text": "Text Message"}}`,
+			body:         `{"update_id": 2, "channel_post": {"text": "Text Message", "sender_chat": {"title": "Test Channel"}}}`,
 			expectedCode: fiber.StatusOK,
 		},
 		{
 			name:         "Get HTTP status 500 when message could not be sent to the API",
 			route:        "/fetch-offers",
-			body:         `{"update_id": 2, "channel_post": {"text": "Text Message", "sender_chat": {"title": "Test Channel"}}}`,
+			body:         `{"update_id": 1, "message": {"text": "Test Game"}}`,
 			expectedCode: fiber.StatusInternalServerError,
 		},
 		{
