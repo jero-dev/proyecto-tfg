@@ -21,6 +21,7 @@ func CollectUpdate(context *fiber.Ctx) error {
 	update := &telegram.Update{}
 
 	if parseError := context.BodyParser(update); parseError != nil {
+		log.Printf("Couldn't parse the request. Error: %s", parseError.Error())
 		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"success": false,
 			"message": MessageNotAbleToParseRequestBody,
@@ -40,6 +41,7 @@ func CollectUpdate(context *fiber.Ctx) error {
 		response, responseError := http.Post(apiURL, "application/json", bytes.NewBuffer(body))
 
 		if responseError != nil {
+			log.Printf("Couldn't send the message to the API. Error: %s", responseError.Error())
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": MessageCouldNotSendToAPI,
@@ -47,6 +49,7 @@ func CollectUpdate(context *fiber.Ctx) error {
 		}
 
 		if response.StatusCode != http.StatusOK {
+			log.Printf("The API returned a %s status code.", response.Status)
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": "The API returned a " + response.Status + " status code.",
@@ -54,6 +57,7 @@ func CollectUpdate(context *fiber.Ctx) error {
 		}
 	}
 
+	log.Println("Message stored successfully.")
 	return context.Status(fiber.StatusOK).JSON(fiber.Map{
 		"success": true,
 		"message": MessageOK,

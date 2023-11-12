@@ -7,12 +7,10 @@ import (
 
 	telegram "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func main() {
 	app := fiber.New()
-	app.Use(logger.New())
 	listenPort := ":" + os.Getenv("PORT")
 
 	app.Post("/collect", handlers.CollectUpdate)
