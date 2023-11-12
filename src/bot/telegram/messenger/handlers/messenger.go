@@ -37,6 +37,7 @@ func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
 	update := &telegram.Update{}
 
 	if parseError := context.BodyParser(update); parseError != nil {
+		log.Printf("[Error parsing the request body] %s", parseError.Error())
 		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"success": false,
 			"message": MessageNotAbleToParseRequestBody,
@@ -51,6 +52,7 @@ func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
 		gameOffersResponse, responseError := http.Get(apiURL)
 
 		if responseError != nil {
+			log.Printf("[Error sending the request to the API] %s", responseError.Error())
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": MessageCouldNotSendToAPI,
@@ -59,6 +61,7 @@ func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
 
 		if gameOffersResponse.StatusCode != http.StatusOK &&
 			gameOffersResponse.StatusCode != http.StatusNotFound {
+			log.Printf("[Not appealing API response] %s", gameOffersResponse.Status)
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": "The API returned an unexpected status code: " + gameOffersResponse.Status,
@@ -70,6 +73,7 @@ func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
 			gameOffersResponse.Body, update.Message.Chat.ID)
 
 		if _, errorBot := bot.Send(answerMessage); errorBot != nil {
+			log.Printf("[Error sending the answer to Telegram] %s", errorBot.Error())
 			return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"success": false,
 				"message": MessageCouldNotSendToAPI,
@@ -77,6 +81,7 @@ func GetGameOffers(context *fiber.Ctx, bot *telegram.BotAPI) error {
 		}
 	}
 
+	log.Print("Process finished correctly.")
 	return context.Status(fiber.StatusOK).JSON(fiber.Map{
 		"success": true,
 		"message": MessageOK,
