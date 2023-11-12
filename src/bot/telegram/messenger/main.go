@@ -13,6 +13,9 @@ func main() {
 	app := fiber.New()
 
 	bot := setUpBot()
+
+	log.Print("[Bot] Bot is up and running")
+
 	app.Get("/fetch-offers", func(context *fiber.Ctx) error {
 		return handlers.GetGameOffers(context, bot)
 	})
@@ -38,9 +41,13 @@ func setUpWebHook(bot *telegram.BotAPI) {
 		log.Fatal(urlError)
 	}
 
+	log.Printf("[Bot] Webhook created successfully for address %s", webHook.URL.String())
+
 	_, setWebHookError := bot.Request(webHook)
 
 	if setWebHookError != nil {
 		log.Fatal(setWebHookError)
 	}
+
+	log.Print("[Bot] Webhook set successfully")
 }
