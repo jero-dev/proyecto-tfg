@@ -1,4 +1,4 @@
  --check es --dict diccionario.txt
- --ignore "sh:nonp,sh:nobreak,lt:es:SPACE_UNITIES,sh:seclen,sh:d:002,lt:es:ES_UNPAIRED_BRACKETS"
+ --ignore "sh:nonp,sh:nobreak,lt:es:SPACE_UNITIES,sh:seclen,sh:d:002,lt:es:ES_UNPAIRED_BRACKETS,lt:es:SUBJUNTIVO_PASADO"
  --remove-macros begin,bfseries,centeroffset,centering,end,oddsidemargin,evensidemargin,textwidth,tableofcontents,listoffigures,listoftables,cleardoublepage,setlength
  --output html
