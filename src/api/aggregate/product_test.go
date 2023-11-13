@@ -1,9 +1,8 @@
-package aggregates_test
+package aggregates
 
 import (
 	"testing"
 
-	aggregates "vidya-sale/api/aggregate"
 	valueobjects "vidya-sale/api/valueobject"
 )
 
@@ -20,13 +19,13 @@ func TestProduct_NewProduct(t *testing.T) {
 			test:          "Product is not provided",
 			product:       "",
 			platform:      "Test Platform",
-			expectedError: aggregates.ErrorMissingProperties,
+			expectedError: ErrorMissingProperties,
 		},
 		{
 			test:          "Platform is not provided",
 			product:       "Test Product",
 			platform:      "",
-			expectedError: aggregates.ErrorMissingProperties,
+			expectedError: ErrorMissingProperties,
 		},
 		{
 			test:          "Everything is provided",
@@ -38,7 +37,7 @@ func TestProduct_NewProduct(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.test, func(t *testing.T) {
-			_, testError := aggregates.NewProduct(testCase.product, testCase.platform)
+			_, testError := NewProduct(testCase.product, testCase.platform)
 			if testError != testCase.expectedError {
 				t.Errorf("Expected error to be %v but got %v", testCase.expectedError, testError)
 			}
@@ -80,7 +79,7 @@ func TestProduct_AddOffer(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.test, func(t *testing.T) {
-			product, _ := aggregates.NewProduct("Test Product", "Test Platform")
+			product, _ := NewProduct("Test Product", "Test Platform")
 			for _, offer := range testCase.productOffers {
 				product.AddOffer(offer)
 			}

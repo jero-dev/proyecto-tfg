@@ -1,12 +1,11 @@
-package services_test
+package services
 
 import (
 	"testing"
-	services "vidya-sale/api/service"
 )
 
 func TestMessageProcessorService_ParseMessage(t *testing.T) {
-	var messageProcessor services.MessageProcessorService
+	var messageProcessor MessageProcessorService
 
 	type testCase struct {
 		name         string
