@@ -1,0 +1,43 @@
+name: Telegram Bot Messenger VidyaSale - Integración Continua
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/bot/telegram/messenger/**"
+  pull_request:
+    paths:
+      - "src/bot/telegram/messenger/**"
+
+env:
+
+  GO_VERSION: "1.20"
+
+jobs:
+
+  build:
+
+    name: Compilación del bot
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./src/bot/telegram/messenger/
+
+    steps:
+
+    - name: Inicializar el repositorio
+      uses: actions/checkout@v4
+
+    - name: Obtener Go para la compilación
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+
+    - name: Compilar el bot
+      run: go build
+    
+    - name: Ejecutar las pruebas
+      run: go test -v ./...
