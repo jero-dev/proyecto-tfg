@@ -5,6 +5,8 @@ import (
 	"os"
 	aggregates "vidya-sale/api/aggregate"
 	"vidya-sale/api/domain/product"
+	entities "vidya-sale/api/entity"
+	valueobjects "vidya-sale/api/valueobject"
 
 	"github.com/google/uuid"
 	"gorm.io/driver/postgres"
@@ -26,7 +28,7 @@ func New() (*PostgresRepository, error) {
 		return nil, connectionError
 	}
 
-	database.AutoMigrate(&aggregates.Product{})
+	database.AutoMigrate(&entities.VideoGame{}, &valueobjects.Offer{}, &aggregates.Product{})
 
 	return &PostgresRepository{
 		database: database,
