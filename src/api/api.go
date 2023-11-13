@@ -14,7 +14,7 @@ func main() {
 	listenPort := ":8080"
 
 	managerService, serviceError :=
-		services.NewOfferManagerService(services.WithMemoryProductRepository())
+		services.NewOfferManagerService(services.WithPostgresProductRepository())
 
 	if serviceError != nil {
 		panic(serviceError)

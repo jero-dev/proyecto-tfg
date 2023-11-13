@@ -6,6 +6,7 @@ import (
 	aggregates "vidya-sale/api/aggregate"
 	"vidya-sale/api/domain/product"
 	"vidya-sale/api/domain/product/memory"
+	"vidya-sale/api/domain/product/postgres"
 	valueobjects "vidya-sale/api/valueobject"
 )
 
@@ -52,6 +53,17 @@ func WithProductRepository(productRepository product.ProductRepository) OfferMan
 		processorService.products = productRepository
 		return nil
 	}
+}
+
+// WithPostgresProductRepository applies a Postgres product repository to the OfferManagerService
+func WithPostgresProductRepository() OfferManagerConfiguration {
+	productRepository, databaseError := postgres.New()
+	if databaseError != nil {
+		return func(processorService *OfferManagerService) error {
+			return databaseError
+		}
+	}
+	return WithProductRepository(productRepository)
 }
 
 // WithMemoryProductRepository applies a memory product repository to the OfferManagerService
