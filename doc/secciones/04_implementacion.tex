@@ -303,18 +303,37 @@ Con los servicios ya recolectando los mensajes de los canales y almacenando la
 información obtenida después de procesarlos, necesitamos que el usuario pueda 
 usarlo de una manera sencilla.
 
-Hay varias opciones para esto, pero por ahora hemos decidido crear otro bot con el 
-que el usuario se pueda comunicar y que este le devuelva la información relacionada 
-con lo que el usuario le pida. Esto es por tener cuanto antes una opción que pueda 
-ser utilizado por los usuarios finales y también por ser un desarrollo muy parecido 
-al del bot que se encarga de recolectar los mensajes de los canales.
-
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.6]{figuras/respuesta-bot.png}
     \caption{Respuesta al preguntar por un título.}
     \label{fig:respuesta_bot}
 \end{figure}
+
+
+Hay varias opciones para esto, teniendo en cuenta la primera historia de usuario 
+que llegamos a definir al principio de este capítulo:
+
+\begin{itemize}
+    \item \textbf{Aplicación web}: Podríamos crear una aplicación web que contenga 
+    un buscador en el que usuario pueda buscar el videojuego en el que esté 
+    interesado. Esta aplicación web se comunicaría con la API principal para 
+    obtener esa información. Aun así, esto requeriría utilizar varios lenguajes de 
+    programación distintos a los que ya están incluidos en la solución.
+    \item \textbf{Aplicación móvil}: Esta sería muy parecida a la aplicación web, 
+    pero con rendimiento nativo en dispositivos móviles. También requeriría 
+    usar otros lenguajes de programación más las limitaciones en el desarrollo de 
+    estas (tiempos de aprobación, exclusividad de desarrollo en ciertos sistemas 
+    operativos, etc.)
+    \item \textbf{Bot mensajero}: Esta es una solución más sencilla y que seguiría 
+    la misma línea que el bot recolector de mensajes de los canales. El usuario 
+    tiene también una interfaz a la que está acostumbrado y seguiríamos empleando 
+    el mismo lenguaje para el desarrollo.
+\end{itemize}
+
+Con estos puntos comentados, hemos decidido desarrollar un bot mensajero con el que 
+el usuario se pueda comunicar y que este le devuelva la información relacionada con 
+lo que se ha llegado a pedir.
 
 Lo que debe de hacer el usuario es enviar un mensaje al bot con el nombre del 
 videojuego en el que esté interesado y el bot le devolverá un mensaje con las 
