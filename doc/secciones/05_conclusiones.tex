@@ -34,13 +34,14 @@ integración de la solución y las que afectan a las funcionalidades de la misma
 
 \subsection{Integración de la solución}
 \begin{itemize}
-    \item \textbf{Uso de una base de datos}: Como llegamos a comentar en la sección 
-    del diseño de la aplicación en el capítulo 4, ahora mismo estamos guardando y 
-    accediendo a los datos almacenados en memoria. Esto para el inicio no supone un 
-    problema para la funcionalidad, pero si se quiere que la aplicación sea 
-    persistente, la base de datos es nuestra solución. Al haber implementado la 
-    aplicación usando inyección de dependencias, esto nos permite cambiar la 
-    implementación de manera sencilla sin ser un gran cambio en el código.
+    \item \textbf{Uso de un servidor de base de datos}: Como llegamos a comentar en 
+    la sección del diseño de la aplicación en el capítulo 4, ahora mismo estamos 
+    guardando y accediendo a los datos almacenados en un repositorio en memoria. 
+    Esto para el inicio no supone un problema para la funcionalidad, pero si se 
+    quiere que la aplicación sea persistente, un servidor de base de datos es 
+    nuestra solución. Al haber implementado la aplicación usando inyección de 
+    dependencias, esto nos permite cambiar la implementación de manera sencilla sin 
+    ser un gran cambio en el código.
     \item \textbf{Uso de contenedores propios}: Al momento en el que hacemos el 
     despliegue de tanto los bots como la API, estamos empleando contenedores que 
     vienen incluidos con el servicio de este. Esto nos permite desplegar de manera 
